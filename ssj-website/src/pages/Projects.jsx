@@ -1,4 +1,5 @@
 import React from 'react';
+import HeroSection from '../components/ui/about-section';
 
 const projects = [
     {
@@ -33,40 +34,46 @@ const projects = [
 
 const Projects = () => {
     return (
-        <section className="py-24 bg-slate-50 min-h-screen">
-            <div className="container mx-auto px-4">
-                <div className="text-center max-w-2xl mx-auto mb-16">
-                    <span className="text-accent font-semibold tracking-wide uppercase text-sm mb-2 block">Our Portfolio</span>
-                    <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Featured Projects</h2>
-                    <p className="text-slate-500">
-                        A glimpse into our recent construction and design excellence.
-                    </p>
-                </div>
+        <div>
+            <HeroSection
+                title="Our Featured Projects"
+                subtitle="A glimpse into our construction excellence"
+            />
+            <section className="py-16 bg-slate-50">
+                <div className="container mx-auto px-4">
+                    <div className="text-center max-w-2xl mx-auto mb-16">
+                        <span className="text-[#C5A059] font-semibold tracking-wide uppercase text-sm mb-2 block">Our Portfolio</span>
+                        <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4" style={{ fontFamily: "'Playfair Display', Georgia, serif" }}>Completed Projects</h2>
+                        <p className="text-slate-500">
+                            Explore our portfolio of residential, commercial, and renovation projects.
+                        </p>
+                    </div>
 
-                <div className="grid md:grid-cols-2 gap-8">
-                    {projects.map((project) => (
-                        <div key={project.id} className="group relative overflow-hidden rounded-xl shadow-lg bg-white">
-                            <div className="aspect-video overflow-hidden">
-                                <img
-                                    src={project.image}
-                                    alt={project.title}
-                                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                                />
+                    <div className="grid md:grid-cols-2 gap-8">
+                        {projects.map((project) => (
+                            <div key={project.id} className="group relative overflow-hidden rounded-xl shadow-lg bg-white">
+                                <div className="aspect-video overflow-hidden">
+                                    <img
+                                        src={project.image}
+                                        alt={project.title}
+                                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                                    />
+                                </div>
+                                <div className="absolute bottom-0 left-0 w-full p-6 bg-gradient-to-t from-black/80 to-transparent pt-12">
+                                    <span className="inline-block px-3 py-1 bg-[#C5A059] text-white text-xs font-semibold rounded mb-2">
+                                        {project.category}
+                                    </span>
+                                    <h3 className="text-xl font-bold text-white mb-1">{project.title}</h3>
+                                    <p className="text-slate-300 text-sm flex items-center gap-1">
+                                        📍 {project.location}
+                                    </p>
+                                </div>
                             </div>
-                            <div className="absolute bottom-0 left-0 w-full p-6 bg-gradient-to-t from-black/80 to-transparent pt-12">
-                                <span className="inline-block px-3 py-1 bg-accent/90 text-white text-xs font-semibold rounded mb-2">
-                                    {project.category}
-                                </span>
-                                <h3 className="text-xl font-bold text-white mb-1">{project.title}</h3>
-                                <p className="text-slate-300 text-sm flex items-center gap-1">
-                                    📍 {project.location}
-                                </p>
-                            </div>
-                        </div>
-                    ))}
+                        ))}
+                    </div>
                 </div>
-            </div>
-        </section>
+            </section>
+        </div>
     );
 };
 

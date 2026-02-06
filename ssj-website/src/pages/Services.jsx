@@ -1,12 +1,17 @@
 import React from 'react';
 import ServicesList from '../components/Services';
-import Packages from '../components/Packages';
+import { PricingSection } from '../components/ui/pricing';
+import HeroSection from '../components/ui/about-section';
 
 const Services = () => {
     return (
-        <div className="pt-20">
+        <div>
+            <HeroSection
+                title="Our Premium Services"
+                subtitle="Quality construction & design solutions"
+            />
             <ServicesList />
-            <Packages />
+            <PricingSection />
         </div>
     );
 };

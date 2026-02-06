@@ -1,75 +1,317 @@
 import React, { useState } from 'react';
+import confetti from 'canvas-confetti';
 import './CostCalculator.css';
 
 const CostCalculator = () => {
-    const [area, setArea] = useState('');
-    const [packageType, setPackageType] = useState(2500); // Default base rate
+    // Contact Information
+    const [name, setName] = useState('');
+    const [phone, setPhone] = useState('');
+    const [email, setEmail] = useState('');
+    const [location, setLocation] = useState('');
 
-    const calculateCost = () => {
-        const areaNum = parseFloat(area);
-        if (!areaNum) return 0;
-        return (areaNum * packageType).toLocaleString('en-IN');
+    // Project Details
+    const [landArea, setLandArea] = useState('');
+    const [floors, setFloors] = useState('Ground');
+    const [packageType, setPackageType] = useState(2199); // Basic package rate
+
+    // Cost Breakdown Table Items
+    const [groundFloorArea, setGroundFloorArea] = useState('');
+    const [waterSumpValue, setWaterSumpValue] = useState('');
+    const [septicTankValue, setSepticTankValue] = useState('');
+    const [compoundWallValue, setCompoundWallValue] = useState('');
+
+    // Submission state
+    const [showSuccess, setShowSuccess] = useState(false);
+
+    // Cost calculation functions
+    const calculateGroundFloorCost = () => {
+        const area = parseFloat(groundFloorArea);
+        return area && !isNaN(area) ? (area * packageType).toFixed(0) : '0';
+    };
+
+    const calculateWaterSumpCost = () => {
+        const value = parseFloat(waterSumpValue);
+        return value && !isNaN(value) ? (value * 35).toFixed(0) : '0';
+    };
+
+    const calculateSepticTankCost = () => {
+        const value = parseFloat(septicTankValue);
+        return value && !isNaN(value) ? (value * 20).toFixed(0) : '0';
+    };
+
+    const calculateCompoundWallCost = () => {
+        const value = parseFloat(compoundWallValue);
+        return value && !isNaN(value) ? (value * 1850).toFixed(0) : '0';
+    };
+
+    const calculateTotalCost = () => {
+        const total =
+            parseInt(calculateGroundFloorCost()) +
+            parseInt(calculateWaterSumpCost()) +
+            parseInt(calculateSepticTankCost()) +
+            parseInt(calculateCompoundWallCost());
+        return total.toLocaleString('en-IN');
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        // Trigger confetti animation
+        const duration = 3 * 1000;
+        const animationEnd = Date.now() + duration;
+        const defaults = {
+            startVelocity: 30,
+            spread: 360,
+            ticks: 60,
+            zIndex: 9999,
+            colors: ['#C5A059', '#9F7E3A', '#F5F5F4', '#E7E5E4', '#44403C']
+        };
+
+        const randomInRange = (min, max) => {
+            return Math.random() * (max - min) + min;
+        };
+
+        const interval = setInterval(() => {
+            const timeLeft = animationEnd - Date.now();
+
+            if (timeLeft <= 0) {
+                return clearInterval(interval);
+            }
+
+            const particleCount = 50 * (timeLeft / duration);
+
+            confetti({
+                ...defaults,
+                particleCount,
+                origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 }
+            });
+            confetti({
+                ...defaults,
+                particleCount,
+                origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 }
+            });
+        }, 250);
+
+        // Show success message
+        setShowSuccess(true);
+
+        // Hide success message after 5 seconds
+        setTimeout(() => {
+            setShowSuccess(false);
+        }, 5000);
     };
 
     return (
         <section id="calculator" className="calculator-section">
             <div className="container">
-                <div className="grid md:grid-cols-2 gap-12 items-center">
-                    <div>
-                        <span className="text-accent font-semibold tracking-wide uppercase text-sm mb-2 block">Estimate</span>
-                        <h2 className="mb-4 text-slate-900">Construction Cost Estimator</h2>
-                        <p className="text-slate-600 mb-8">
-                            Get a quick ballpark estimate for your construction project.
-                            Enter the built-up area and choose a package type to see the estimated cost.
-                        </p>
-                        <ul className="space-y-4 mb-8">
-                            <li className="flex items-center gap-3 text-slate-700">
-                                <span className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-accent font-bold">1</span>
-                                Enter Plot/Built-up Area
-                            </li>
-                            <li className="flex items-center gap-3 text-slate-700">
-                                <span className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-accent font-bold">2</span>
-                                Select Quality Grade
-                            </li>
-                            <li className="flex items-center gap-3 text-slate-700">
-                                <span className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-accent font-bold">3</span>
-                                Get Instant Estimate
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div className="calculator-wrapper">
-                        <div className="form-group">
-                            <label className="form-label">Built-up Area (Sq. ft)</label>
-                            <input
-                                type="number"
-                                className="form-input"
-                                placeholder="Ex: 1200"
-                                value={area}
-                                onChange={(e) => setArea(e.target.value)}
-                            />
-                        </div>
-
-                        <div className="form-group">
-                            <label className="form-label">Package Grade</label>
-                            <select
-                                className="form-select"
-                                value={packageType}
-                                onChange={(e) => setPackageType(Number(e.target.value))}
-                            >
-                                <option value="2100">Basic (₹2100/sq.ft)</option>
-                                <option value="2500">Premium (₹2500/sq.ft)</option>
-                                <option value="2999">Luxury (₹2999/sq.ft)</option>
-                            </select>
-                        </div>
-
-                        <div className="calc-result">
-                            <div className="result-label">Estimated Construction Cost</div>
-                            <div className="result-value">₹ {calculateCost()}</div>
-                            <p className="text-xs text-slate-400 mt-2">*Indicative pricing only. Contact us for final quote.</p>
-                        </div>
-                    </div>
+                <div className="calculator-header">
+                    <span className="text-accent font-semibold tracking-wide uppercase text-sm mb-2 block">Estimate</span>
+                    <h2 className="mb-4 text-slate-900">Construction Cost Estimator</h2>
+                    <p className="text-slate-600 mb-8">
+                        Get a detailed estimate for your construction project. Fill in your details and project requirements below.
+                    </p>
                 </div>
+
+                <form onSubmit={handleSubmit} className="calculator-wrapper">
+                    {/* Contact Information Section */}
+                    <div className="form-section">
+                        <h3 className="section-title">Contact Information</h3>
+                        <div className="form-grid">
+                            <div className="form-group">
+                                <label className="form-label">Name *</label>
+                                <input
+                                    type="text"
+                                    className="form-input"
+                                    placeholder="Enter name"
+                                    value={name}
+                                    onChange={(e) => setName(e.target.value)}
+                                    required
+                                />
+                            </div>
+
+                            <div className="form-group">
+                                <label className="form-label">Phone Number *</label>
+                                <input
+                                    type="tel"
+                                    className="form-input"
+                                    placeholder="Enter phone number"
+                                    value={phone}
+                                    onChange={(e) => setPhone(e.target.value)}
+                                    required
+                                />
+                            </div>
+
+                            <div className="form-group">
+                                <label className="form-label">Email *</label>
+                                <input
+                                    type="email"
+                                    className="form-input"
+                                    placeholder="Enter email address"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    required
+                                />
+                            </div>
+
+                            <div className="form-group">
+                                <label className="form-label">Location *</label>
+                                <input
+                                    type="text"
+                                    className="form-input"
+                                    placeholder="Enter location"
+                                    value={location}
+                                    onChange={(e) => setLocation(e.target.value)}
+                                    required
+                                />
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Project Details Section */}
+                    <div className="form-section">
+                        <h3 className="section-title">Project Details</h3>
+                        <div className="form-grid">
+                            <div className="form-group">
+                                <label className="form-label">Total Land Area *</label>
+                                <input
+                                    type="number"
+                                    className="form-input"
+                                    placeholder="Enter total area"
+                                    value={landArea}
+                                    onChange={(e) => setLandArea(e.target.value)}
+                                    required
+                                />
+                            </div>
+
+                            <div className="form-group">
+                                <label className="form-label">No. of Floors *</label>
+                                <select
+                                    className="form-select"
+                                    value={floors}
+                                    onChange={(e) => setFloors(e.target.value)}
+                                    required
+                                >
+                                    <option value="Ground">Ground</option>
+                                    <option value="Ground + 1st Floor">Ground + 1st Floor</option>
+                                    <option value="Ground + 1st Floor + 2nd Floor">Ground + 1st Floor + 2nd Floor</option>
+                                </select>
+                            </div>
+
+                            <div className="form-group form-group-full">
+                                <label className="form-label">Package *</label>
+                                <select
+                                    className="form-select"
+                                    value={packageType}
+                                    onChange={(e) => setPackageType(Number(e.target.value))}
+                                    required
+                                >
+                                    <option value="2199">Basic Package @ ₹2199/sqft</option>
+                                    <option value="2500">Premium Package @ ₹2500/sqft</option>
+                                    <option value="2999">Luxury Package @ ₹2999/sqft</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Cost Breakdown Table */}
+                    <div className="form-section">
+                        <h3 className="section-title">Cost Breakdown</h3>
+                        <div className="cost-table-wrapper">
+                            <table className="cost-table">
+                                <thead>
+                                    <tr>
+                                        <th>Work</th>
+                                        <th>Area</th>
+                                        <th>Unit</th>
+                                        <th>Rate</th>
+                                        <th>Cost</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Area for Ground Floor</td>
+                                        <td>
+                                            <input
+                                                type="number"
+                                                className="table-input"
+                                                placeholder="Area in sqft"
+                                                value={groundFloorArea}
+                                                onChange={(e) => setGroundFloorArea(e.target.value)}
+                                            />
+                                        </td>
+                                        <td>sqft</td>
+                                        <td>₹{packageType}</td>
+                                        <td className="cost-cell">₹{parseInt(calculateGroundFloorCost()).toLocaleString('en-IN')}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Size of RCC Water Sump (3000 litre)</td>
+                                        <td>
+                                            <input
+                                                type="number"
+                                                className="table-input"
+                                                placeholder="Value"
+                                                value={waterSumpValue}
+                                                onChange={(e) => setWaterSumpValue(e.target.value)}
+                                            />
+                                        </td>
+                                        <td>litre</td>
+                                        <td>₹35</td>
+                                        <td className="cost-cell">₹{parseInt(calculateWaterSumpCost()).toLocaleString('en-IN')}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Size of Septic Tank (10000 litre)</td>
+                                        <td>
+                                            <input
+                                                type="number"
+                                                className="table-input"
+                                                placeholder="Value"
+                                                value={septicTankValue}
+                                                onChange={(e) => setSepticTankValue(e.target.value)}
+                                            />
+                                        </td>
+                                        <td>litre</td>
+                                        <td>₹20</td>
+                                        <td className="cost-cell">₹{parseInt(calculateSepticTankCost()).toLocaleString('en-IN')}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Compound Wall (Height 5ft)</td>
+                                        <td>
+                                            <input
+                                                type="number"
+                                                className="table-input"
+                                                placeholder="Value"
+                                                value={compoundWallValue}
+                                                onChange={(e) => setCompoundWallValue(e.target.value)}
+                                            />
+                                        </td>
+                                        <td>RFT</td>
+                                        <td>₹1850</td>
+                                        <td className="cost-cell">₹{parseInt(calculateCompoundWallCost()).toLocaleString('en-IN')}</td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr className="total-row">
+                                        <td colSpan="4">Total Estimated Cost</td>
+                                        <td className="total-cost">₹{calculateTotalCost()}</td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+
+                    {/* Submit Button */}
+                    <button type="submit" className="submit-btn">
+                        GET FREE ESTIMATE NOW
+                    </button>
+
+                    {/* Success Message */}
+                    {showSuccess && (
+                        <div className="success-message">
+                            <h3>🎉 Congrats on your new house!</h3>
+                            <p>We've received your estimate request and will get back to you soon.</p>
+                        </div>
+                    )}
+                </form>
             </div>
         </section>
     );

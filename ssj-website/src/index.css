@@ -1,3 +1,5 @@
+@import "tailwindcss";
+
 :root {
   /* Premium Construction Palette - Light & Gold */
   /* Replaced Dark Blue with Neutral/Warm Greys */
@@ -172,4 +174,24 @@ img {
 
 .section-padding {
   padding: 6rem 0;
+}
+
+/* Pricing Grid - Responsive 4 columns */
+.pricing-grid {
+  display: grid !important;
+  grid-template-columns: 1fr !important;
+  gap: 1.5rem !important;
+}
+
+@media (min-width: 640px) {
+  .pricing-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  .pricing-grid {
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 1rem !important;
+  }
 }

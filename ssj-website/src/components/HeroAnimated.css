@@ -12,8 +12,8 @@
   left: 5%;
   top: 50%;
   transform: translateY(-50%);
-  width: 48%;
-  max-width: 550px;
+  width: 55%;
+  max-width: 800px;
   z-index: 5;
   display: none;
 }
@@ -70,8 +70,8 @@
 
 /* SVG Line Drawing Animations */
 .hero-animated .draw-line {
-  stroke-dasharray: 1000;
-  stroke-dashoffset: 1000;
+  stroke-dasharray: 1200;
+  stroke-dashoffset: 1200;
   animation: drawLine 2s ease forwards;
 }
 
