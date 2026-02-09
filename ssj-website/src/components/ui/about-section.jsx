@@ -108,7 +108,7 @@ export default function HeroSection({
                         >
                             <Link
                                 to="/contact"
-                                className="group flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all duration-300 hover:shadow-xl"
+                                className="group flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all duration-300 hover:shadow-xl whitespace-nowrap"
                                 style={{
                                     background: 'linear-gradient(135deg, #C5A059 0%, #D4AF37 100%)',
                                     color: '#1C1917',
@@ -120,7 +120,7 @@ export default function HeroSection({
                             </Link>
                             <Link
                                 to="/projects"
-                                className="flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all duration-300 hover:bg-stone-100"
+                                className="flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all duration-300 hover:bg-stone-100 whitespace-nowrap"
                                 style={{
                                     background: '#FFFFFF',
                                     color: '#1C1917',
@@ -188,25 +188,7 @@ export default function HeroSection({
                                     background: 'linear-gradient(to top, rgba(28,25,23,0.7) 0%, transparent 60%)'
                                 }}
                             />
-                            {/* Featured Badge */}
-                            <div
-                                className="absolute bottom-6 left-6 right-6 p-4 rounded-xl"
-                                style={{
-                                    background: 'rgba(255,255,255,0.95)',
-                                    backdropFilter: 'blur(10px)',
-                                    border: '1px solid rgba(197,160,89,0.2)'
-                                }}
-                            >
-                                <div className="text-xs text-[#C5A059] font-semibold uppercase tracking-wider mb-1">
-                                    Featured Project
-                                </div>
-                                <div className="text-[#1C1917] font-bold text-lg">
-                                    Modern Luxury Villa
-                                </div>
-                                <div className="text-[#78716C] text-sm">
-                                    Avadi, Chennai
-                                </div>
-                            </div>
+
                         </div>
 
                         {/* Decorative Elements */}

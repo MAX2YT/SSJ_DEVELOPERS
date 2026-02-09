@@ -205,8 +205,9 @@ const CostCalculator = () => {
                                     onChange={(e) => setPackageType(Number(e.target.value))}
                                     required
                                 >
-                                    <option value="2199">Basic Package @ ₹2199/sqft</option>
-                                    <option value="2500">Premium Package @ ₹2500/sqft</option>
+                                    <option value="1999">Basic Package @ ₹1999/sqft</option>
+                                    <option value="2199">Standard Package @ ₹2199/sqft</option>
+                                    <option value="2499">Premium Package @ ₹2499/sqft</option>
                                     <option value="2999">Luxury Package @ ₹2999/sqft</option>
                                 </select>
                             </div>
@@ -229,64 +230,68 @@ const CostCalculator = () => {
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td>Area for Ground Floor</td>
-                                        <td>
+                                        <td data-label="Work">Area for Ground Floor</td>
+                                        <td data-label="Enter Area">
                                             <input
                                                 type="number"
                                                 className="table-input"
                                                 placeholder="Area in sqft"
                                                 value={groundFloorArea}
                                                 onChange={(e) => setGroundFloorArea(e.target.value)}
+                                                inputMode="decimal"
                                             />
                                         </td>
-                                        <td>sqft</td>
-                                        <td>₹{packageType}</td>
-                                        <td className="cost-cell">₹{parseInt(calculateGroundFloorCost()).toLocaleString('en-IN')}</td>
+                                        <td data-label="Unit">sqft</td>
+                                        <td data-label="Rate">₹{packageType}</td>
+                                        <td className="cost-cell" data-label="Cost">₹{parseInt(calculateGroundFloorCost()).toLocaleString('en-IN')}</td>
                                     </tr>
                                     <tr>
-                                        <td>Size of RCC Water Sump (3000 litre)</td>
-                                        <td>
+                                        <td data-label="Work">Size of RCC Water Sump (3000 litre)</td>
+                                        <td data-label="Enter Value">
                                             <input
                                                 type="number"
                                                 className="table-input"
                                                 placeholder="Value"
                                                 value={waterSumpValue}
                                                 onChange={(e) => setWaterSumpValue(e.target.value)}
+                                                inputMode="decimal"
                                             />
                                         </td>
-                                        <td>litre</td>
-                                        <td>₹35</td>
-                                        <td className="cost-cell">₹{parseInt(calculateWaterSumpCost()).toLocaleString('en-IN')}</td>
+                                        <td data-label="Unit">litre</td>
+                                        <td data-label="Rate">₹35</td>
+                                        <td className="cost-cell" data-label="Cost">₹{parseInt(calculateWaterSumpCost()).toLocaleString('en-IN')}</td>
                                     </tr>
                                     <tr>
-                                        <td>Size of Septic Tank (10000 litre)</td>
-                                        <td>
+                                        <td data-label="Work">Size of Septic Tank (10000 litre)</td>
+                                        <td data-label="Enter Value">
                                             <input
                                                 type="number"
                                                 className="table-input"
                                                 placeholder="Value"
                                                 value={septicTankValue}
                                                 onChange={(e) => setSepticTankValue(e.target.value)}
+                                                inputMode="decimal"
                                             />
                                         </td>
-                                        <td>litre</td>
-                                        <td>₹20</td>
-                                        <td className="cost-cell">₹{parseInt(calculateSepticTankCost()).toLocaleString('en-IN')}</td>
+                                        <td data-label="Unit">litre</td>
+                                        <td data-label="Rate">₹20</td>
+                                        <td className="cost-cell" data-label="Cost">₹{parseInt(calculateSepticTankCost()).toLocaleString('en-IN')}</td>
                                     </tr>
                                     <tr>
-                                        <td>Compound Wall (Height 5ft)</td>
-                                        <td>
+                                        <td data-label="Work">Compound Wall (Height 5ft)</td>
+                                        <td data-label="Enter Value">
                                             <input
                                                 type="number"
                                                 className="table-input"
                                                 placeholder="Value"
                                                 value={compoundWallValue}
                                                 onChange={(e) => setCompoundWallValue(e.target.value)}
+                                                inputMode="decimal"
                                             />
                                         </td>
-                                        <td>RFT</td>
-                                        <td>₹1850</td>
-                                        <td className="cost-cell">₹{parseInt(calculateCompoundWallCost()).toLocaleString('en-IN')}</td>
+                                        <td data-label="Unit">RFT</td>
+                                        <td data-label="Rate">₹1850</td>
+                                        <td className="cost-cell" data-label="Cost">₹{parseInt(calculateCompoundWallCost()).toLocaleString('en-IN')}</td>
                                     </tr>
                                 </tbody>
                                 <tfoot>

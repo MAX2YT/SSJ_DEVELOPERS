@@ -78,3 +78,30 @@
     padding-top: 2rem;
     border-top: 1px solid #F1F5F9;
 }
+
+/* Mobile Design Thinking: Horizontal Carousel */
+@media (max-width: 768px) {
+    .packages-section .container .grid {
+        display: flex;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        gap: 1rem;
+        padding-bottom: 2rem;
+        padding-left: 1rem;
+        padding-right: 1rem;
+        -webkit-overflow-scrolling: touch;
+        /* Hide scrollbar */
+        scrollbar-width: none;
+    }
+
+    .packages-section .container .grid::-webkit-scrollbar {
+        display: none;
+    }
+
+    .package-card {
+        min-width: 88vw;
+        scroll-snap-align: center;
+        margin-right: 0;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
+}

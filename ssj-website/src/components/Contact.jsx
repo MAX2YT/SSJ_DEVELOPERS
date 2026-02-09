@@ -6,17 +6,17 @@ const Contact = () => {
     return (
         <section id="contact" className="contact-section">
             <div className="container">
-                <div className="text-center max-w-2xl mx-auto mb-12">
-                    <span className="text-accent font-semibold tracking-wide uppercase text-sm mb-2 block">Get in Touch</span>
+                <div className="text-center max-w-2xl mx-auto mb-16">
+                    <span className="text-accent font-semibold tracking-wide uppercase text-sm mb-3 block">Get in Touch</span>
                     <h2 className="mb-4">Contact Us</h2>
                     <p className="text-slate-500">
                         Ready to start your dream project? Reach out to us for a consultation or quote.
                     </p>
                 </div>
 
-                <div className="grid md:grid-cols-2 gap-12">
+                <div className="grid md:grid-cols-2 gap-16 items-start">
                     {/* Contact Info */}
-                    <div>
+                    <div className="space-y-6">
                         <div className="contact-info-item">
                             <div className="contact-icon"><Phone size={24} /></div>
                             <div>

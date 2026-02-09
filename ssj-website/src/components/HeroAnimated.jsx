@@ -1,5 +1,6 @@
 import React from 'react';
 import { ArrowRight, Home, Ruler, Hammer } from 'lucide-react';
+
 import './HeroAnimated.css';
 
 // Practical Independent House SVG Component
@@ -209,19 +210,16 @@ const HeroAnimated = () => {
                         </div>
 
                         {/* CTA Buttons */}
-                        <div className="cta-buttons">
-                            <a href="#calculator" className="cta-btn primary">
-                                <span className="corner-tl"></span>
-                                <span className="corner-br"></span>
-                                GET FREE QUOTE <ArrowRight size={16} style={{ marginLeft: '0.5rem', display: 'inline' }} />
+                        <div className="cta-buttons flex gap-4">
+                            <a href="#calculator" className="btn btn-primary h-14 px-8 text-lg rounded-full flex items-center gap-2">
+                                GET FREE QUOTE <ArrowRight size={18} />
                             </a>
 
-                            <a href="/services" className="cta-btn">
-                                <span className="corner-tl"></span>
-                                <span className="corner-br"></span>
+                            <a href="/services" className="btn btn-outline h-14 px-8 text-lg rounded-full flex items-center gap-2 bg-stone-50 hover:bg-stone-200 border-stone-300 text-stone-600 hover:text-stone-900">
                                 EXPLORE SERVICES
                             </a>
                         </div>
+
 
                         {/* Bottom Decoration */}
                         <div className="bottom-decoration">
@@ -233,7 +231,7 @@ const HeroAnimated = () => {
                 </div>
             </div>
 
-        </section>
+        </section >
     );
 };
 
