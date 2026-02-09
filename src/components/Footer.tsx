@@ -1,5 +1,5 @@
 
-import { Facebook, Instagram, Twitter } from 'lucide-react';
+import { Facebook, Instagram, Youtube } from 'lucide-react';
 import './Footer.css';
 
 const Footer = () => {
@@ -15,11 +15,6 @@ const Footer = () => {
                         <p className="mb-6 max-w-sm">
                             We provide complete construction and real estate solutions in Avadi and surrounding areas. Quality and integrity are our core values.
                         </p>
-                        <div className="flex gap-4">
-                            <a href="#" className="hover:text-accent text-slate-400 disabled"><Facebook size={20} /></a>
-                            <a href="#" className="hover:text-accent text-slate-400 disabled"><Instagram size={20} /></a>
-                            <a href="#" className="hover:text-accent text-slate-400 disabled"><Twitter size={20} /></a>
-                        </div>
                     </div>
 
                     <div>
@@ -33,12 +28,20 @@ const Footer = () => {
                     </div>
 
                     <div>
-                        <h3>Services</h3>
+                        <h3>Social Media Links</h3>
                         <div className="footer-links">
-                            <a href="#services" className="footer-link">Residential Construction</a>
-                            <a href="#services" className="footer-link">Architectural Design</a>
-                            <a href="#services" className="footer-link">Interior Design</a>
-                            <a href="#services" className="footer-link">Renovation</a>
+                            <a href="https://youtube.com/@ssjdevelopers-q7i?si=XZpKMKLjEFDB7QS-" target="_blank" rel="noopener noreferrer" className="footer-link social-link">
+                                <Youtube size={18} />
+                                <span>YouTube</span>
+                            </a>
+                            <a href="https://www.instagram.com/ssjdevelopersofficial?igsh=ZWZwbmVueWRoa3Jo" target="_blank" rel="noopener noreferrer" className="footer-link social-link">
+                                <Instagram size={18} />
+                                <span>Instagram</span>
+                            </a>
+                            <a href="https://www.facebook.com/share/14UvXCEGsLr/" target="_blank" rel="noopener noreferrer" className="footer-link social-link">
+                                <Facebook size={18} />
+                                <span>Facebook</span>
+                            </a>
                         </div>
                     </div>
                 </div>

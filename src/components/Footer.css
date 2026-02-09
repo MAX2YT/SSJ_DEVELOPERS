@@ -37,6 +37,20 @@
     color: var(--accent);
 }
 
+.social-link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.social-link:hover svg {
+    transform: scale(1.1);
+}
+
+.social-link svg {
+    transition: transform 0.2s ease;
+}
+
 .footer-bottom {
     border-top: 1px solid #E7E5E4;
     /* Stone 200 */
