@@ -12,7 +12,29 @@ import {
 import { motion } from "framer-motion"
 import { cn } from "@/lib/utils"
 
-const VerticalCutReveal = forwardRef(
+interface VerticalCutRevealProps {
+    children: React.ReactNode;
+    reverse?: boolean;
+    transition?: React.ComponentProps<typeof motion.div>['transition'];
+    splitBy?: "words" | "characters" | "lines" | string;
+    staggerDuration?: number;
+    staggerFrom?: "first" | "last" | "center" | "random" | number;
+    containerClassName?: string;
+    wordLevelClassName?: string;
+    elementLevelClassName?: string;
+    onClick?: () => void;
+    onStart?: () => void;
+    onComplete?: () => void;
+    autoStart?: boolean;
+    [key: string]: any;
+}
+
+export interface VerticalCutRevealHandle {
+    startAnimation: () => void;
+    reset: () => void;
+}
+
+const VerticalCutReveal = forwardRef<VerticalCutRevealHandle, VerticalCutRevealProps>(
     (
         {
             children,
@@ -41,8 +63,9 @@ const VerticalCutReveal = forwardRef(
         const [isAnimating, setIsAnimating] = useState(false)
 
         // Split text into characters with Unicode and emoji support
-        const splitIntoCharacters = (text) => {
+        const splitIntoCharacters = (text: string) => {
             if (typeof Intl !== "undefined" && "Segmenter" in Intl) {
+                // @ts-ignore
                 const segmenter = new Intl.Segmenter("en", { granularity: "grapheme" })
                 return Array.from(segmenter.segment(text), ({ segment }) => segment)
             }
@@ -53,7 +76,7 @@ const VerticalCutReveal = forwardRef(
         const elements = useMemo(() => {
             const words = text.split(" ")
             if (splitBy === "characters") {
-                return words.map((word, i) => ({
+                return words.map((word: string, i: number) => ({
                     characters: splitIntoCharacters(word),
                     needsSpace: i !== words.length - 1,
                 }))
@@ -67,10 +90,10 @@ const VerticalCutReveal = forwardRef(
 
         // Calculate stagger delays
         const getStaggerDelay = useCallback(
-            (index) => {
+            (index: number) => {
                 const total =
                     splitBy === "characters"
-                        ? elements.reduce(
+                        ? (elements as any[]).reduce(
                             (acc, word) =>
                                 acc +
                                 (typeof word === "string"
@@ -89,7 +112,7 @@ const VerticalCutReveal = forwardRef(
                     const randomIndex = Math.floor(Math.random() * total)
                     return Math.abs(randomIndex - index) * staggerDuration
                 }
-                return Math.abs(staggerFrom - index) * staggerDuration
+                return Math.abs((staggerFrom as number) - index) * staggerDuration
             },
             [elements.length, staggerFrom, staggerDuration, splitBy, elements]
         )
@@ -112,11 +135,11 @@ const VerticalCutReveal = forwardRef(
 
         const variants = {
             hidden: { y: reverse ? "-100%" : "100%" },
-            visible: (i) => ({
+            visible: (i: number) => ({
                 y: 0,
                 transition: {
                     ...transition,
-                    delay: ((transition?.delay) || 0) + getStaggerDelay(i),
+                    delay: ((transition as any)?.delay || 0) + getStaggerDelay(i),
                 },
             }),
         }
@@ -136,11 +159,11 @@ const VerticalCutReveal = forwardRef(
 
                 {(splitBy === "characters"
                     ? elements
-                    : elements.map((el, i) => ({
+                    : (elements as any[]).map((el, i) => ({
                         characters: [el],
                         needsSpace: i !== elements.length - 1,
                     }))
-                ).map((wordObj, wordIndex, array) => {
+                ).map((wordObj: any, wordIndex: number, array: any[]) => {
                     const previousCharsCount = array
                         .slice(0, wordIndex)
                         .reduce((sum, word) => sum + word.characters.length, 0)
@@ -151,7 +174,7 @@ const VerticalCutReveal = forwardRef(
                             aria-hidden="true"
                             className={cn("inline-flex overflow-hidden", wordLevelClassName)}
                         >
-                            {wordObj.characters.map((char, charIndex) => (
+                            {wordObj.characters.map((char: string, charIndex: number) => (
                                 <span
                                     className={cn(
                                         elementLevelClassName,

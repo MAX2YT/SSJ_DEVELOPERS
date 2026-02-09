@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { ArrowRight, Home, Ruler, Hammer } from 'lucide-react';
 
 import './HeroAnimated.css';

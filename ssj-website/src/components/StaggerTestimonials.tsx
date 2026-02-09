@@ -107,7 +107,8 @@ const testimonials = [
 ];
 
 // Helper function to get initials from name
-const getInitials = (name) => {
+// Helper function to get initials from name
+const getInitials = (name: string) => {
     const nameParts = name.split(',')[0].trim().split(' ');
     if (nameParts.length >= 2) {
         return `${nameParts[0][0]}${nameParts[1][0]}`.toUpperCase();
@@ -115,7 +116,7 @@ const getInitials = (name) => {
     return nameParts[0].substring(0, 2).toUpperCase();
 };
 
-const InitialsAvatar = ({ name, isCenter }) => {
+const InitialsAvatar = ({ name, isCenter }: { name: string; isCenter: boolean }) => {
     const initials = getInitials(name);
 
     return (
@@ -138,15 +139,28 @@ const InitialsAvatar = ({ name, isCenter }) => {
     );
 };
 
+interface Testimonial {
+    tempId: number;
+    testimonial: string;
+    by: string;
+}
+
+interface TestimonialCardProps {
+    position: number;
+    testimonial: Testimonial;
+    handleMove: (steps: number) => void;
+    cardSize: number;
+}
+
 const TestimonialCard = ({
     position,
     testimonial,
     handleMove,
     cardSize
-}) => {
+}: TestimonialCardProps) => {
     const isCenter = position === 0;
 
-    const cardStyle = {
+    const cardStyle: React.CSSProperties = {
         position: 'absolute',
         left: '50%',
         top: '50%',
@@ -221,7 +235,7 @@ export const StaggerTestimonials = () => {
         testimonialsRef.current = testimonialsList;
     }, [testimonialsList]);
 
-    const handleMove = (steps) => {
+    const handleMove = (steps: number) => {
         const newList = [...testimonialsRef.current];
         if (steps > 0) {
             for (let i = steps; i > 0; i--) {

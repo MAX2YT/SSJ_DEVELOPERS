@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import './Header.css';
@@ -16,7 +16,7 @@ const Header = () => {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
-    const isActive = (path) => location.pathname === path ? 'active' : '';
+    const isActive = (path: string) => location.pathname === path ? 'active' : '';
 
     return (
         <header className={`header ${isScrolled ? 'scrolled' : ''}`}>

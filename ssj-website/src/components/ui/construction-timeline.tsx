@@ -1,10 +1,25 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
-import { FileCheck, Shovel, Building2, Frame, Wrench, PaintBucket, KeyRound } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { FileCheck, Shovel, Building2, Frame, Wrench, PaintBucket, KeyRound, type LucideIcon } from "lucide-react";
 import './construction-timeline.css';
 
-export const constructionPhases = [
+export interface ConstructionPhase {
+    icon: LucideIcon;
+    title: string;
+    subtitle: string;
+    description: string;
+    items?: string[];
+    image: string;
+}
+
+export interface ConstructionTimelineProps {
+    title?: string;
+    description?: string;
+    entries?: ConstructionPhase[];
+}
+
+export const constructionPhases: ConstructionPhase[] = [
     {
         icon: FileCheck,
         title: "Pre-Construction & Planning",
@@ -108,15 +123,17 @@ export const constructionPhases = [
     },
 ];
 
+
+
 export default function ConstructionTimeline({
     title = "Our Construction Process",
     description = "From planning to handover, we follow a systematic approach to bring your dream home to life. Each phase is executed with precision and transparency.",
     entries = constructionPhases,
-}) {
+}: ConstructionTimelineProps) {
     const [activeIndex, setActiveIndex] = useState(0);
-    const sentinelRefs = useRef([]);
+    const sentinelRefs = useRef<(HTMLDivElement | null)[]>([]);
 
-    const setSentinelRef = (el, i) => {
+    const setSentinelRef = (el: HTMLDivElement | null, i: number) => {
         sentinelRefs.current[i] = el;
     };
 

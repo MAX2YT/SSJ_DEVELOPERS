@@ -1,4 +1,4 @@
-import React from 'react';
+
 import HeroAnimated from '../components/HeroAnimated';
 import AboutUs from '../components/AboutUs';
 import ConstructionTimeline from '../components/ui/construction-timeline';

@@ -53,7 +53,7 @@ const CostCalculator = () => {
         return total.toLocaleString('en-IN');
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
 
         // Trigger confetti animation
@@ -67,7 +67,7 @@ const CostCalculator = () => {
             colors: ['#C5A059', '#9F7E3A', '#F5F5F4', '#E7E5E4', '#44403C']
         };
 
-        const randomInRange = (min, max) => {
+        const randomInRange = (min: number, max: number) => {
             return Math.random() * (max - min) + min;
         };
 
@@ -296,7 +296,7 @@ const CostCalculator = () => {
                                 </tbody>
                                 <tfoot>
                                     <tr className="total-row">
-                                        <td colSpan="4">Total Estimated Cost</td>
+                                        <td colSpan={4}>Total Estimated Cost</td>
                                         <td className="total-cost">₹{calculateTotalCost()}</td>
                                     </tr>
                                 </tfoot>

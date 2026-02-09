@@ -1,8 +1,13 @@
-import React from 'react';
+
 import { Check, Info } from 'lucide-react';
 import './Packages.css';
 
-const packageDetails = [
+interface PackageDetail {
+    category: string;
+    items: string[];
+}
+
+const packageDetails: PackageDetail[] = [
     {
         category: 'Design & Engineering',
         items: [

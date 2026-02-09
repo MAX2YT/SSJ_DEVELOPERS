@@ -59,7 +59,7 @@ const Contact = () => {
                     {/* Contact Form */}
                     <div className="contact-form">
                         <h3 className="mb-6 font-bold text-2xl text-slate-800">Send us a Message</h3>
-                        <form onSubmit={(e) => e.preventDefault()}>
+                        <form onSubmit={(e: React.FormEvent) => e.preventDefault()}>
                             <div className="grid md:grid-cols-2 gap-4 mb-4">
                                 <div className="form-group mb-0">
                                     <label className="form-label">Name</label>

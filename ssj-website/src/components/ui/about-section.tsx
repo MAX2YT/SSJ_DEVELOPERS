@@ -3,10 +3,15 @@ import { motion } from 'framer-motion';
 import { ArrowRight, Sparkles } from 'lucide-react';
 import { Link } from "react-router-dom";
 
+interface HeroSectionProps {
+    title?: string;
+    subtitle?: string;
+}
+
 export default function HeroSection({
     title = "Building Dreams Into Reality",
     subtitle = "Premium construction services in Chennai"
-}) {
+}: HeroSectionProps) {
     const stats = [
         { value: "10+", label: "Years Experience" },
         { value: "50+", label: "Projects Completed" },

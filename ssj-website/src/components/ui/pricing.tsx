@@ -1,15 +1,14 @@
 "use client";
 
-import { useMediaQuery } from "@/hooks/use-media-query";
 import { motion, AnimatePresence } from "framer-motion";
-import { Check, Star, ArrowRight, Sparkles, Crown, Zap, ChevronDown, Ruler, Palette, Plug, Droplets, Home, UtensilsCrossed, DoorOpen, PaintBucket, AlertCircle } from "lucide-react";
+import { type LucideIcon, Star, ArrowRight, Sparkles, Crown, Zap, ChevronDown, Ruler, Palette, Plug, Droplets, Home, UtensilsCrossed, DoorOpen, PaintBucket, AlertCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useState, useRef } from "react";
 import confetti from "canvas-confetti";
 import NumberFlow from "@number-flow/react";
 
 // Category icons mapping
-const categoryIcons = {
+const categoryIcons: Record<string, LucideIcon> = {
     "Design": Ruler,
     "Project Management": Home,
     "Structure": Home,
@@ -22,8 +21,16 @@ const categoryIcons = {
     "What's Not Included": AlertCircle,
 };
 
+interface AccordionItemProps {
+    title: string;
+    items: string[];
+    isOpen: boolean;
+    onToggle: () => void;
+    isNotIncluded?: boolean;
+}
+
 // Accordion Item Component
-function AccordionItem({ title, items, isOpen, onToggle, isNotIncluded = false }) {
+function AccordionItem({ title, items, isOpen, onToggle, isNotIncluded = false }: AccordionItemProps) {
     const Icon = categoryIcons[title] || Home;
 
     return (
@@ -113,15 +120,37 @@ function AccordionItem({ title, items, isOpen, onToggle, isNotIncluded = false }
     );
 }
 
+export interface PlanCategory {
+    title: string;
+    items: string[];
+}
+
+export interface Plan {
+    name: string;
+    tagline: string;
+    price: string;
+    totalPrice: string;
+    buttonText: string;
+    href: string;
+    isPopular: boolean;
+    categories: PlanCategory[];
+}
+
+export interface PricingProps {
+    plans: Plan[];
+    title?: string;
+    description?: string;
+}
+
 export function Pricing({
     plans,
     title = "Our Construction Packages",
     description = "Choose the package that fits your budget and requirements.",
-}) {
+}: PricingProps) {
     const [isPerSqFt, setIsPerSqFt] = useState(true);
-    const isDesktop = useMediaQuery("(min-width: 768px)");
-    const switchRef = useRef(null);
-    const [openCategories, setOpenCategories] = useState({});
+    // const isDesktop = useMediaQuery("(min-width: 768px)"); // Unused
+    const switchRef = useRef<HTMLDivElement>(null);
+    const [openCategories, setOpenCategories] = useState<Record<string, boolean>>({});
 
     const handleToggle = () => {
         setIsPerSqFt(!isPerSqFt);
@@ -147,7 +176,7 @@ export function Pricing({
         }
     };
 
-    const toggleCategory = (planIndex, categoryTitle) => {
+    const toggleCategory = (planIndex: number, categoryTitle: string) => {
         const key = `${planIndex}-${categoryTitle}`;
         setOpenCategories(prev => ({
             ...prev,

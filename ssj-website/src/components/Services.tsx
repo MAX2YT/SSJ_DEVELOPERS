@@ -1,9 +1,9 @@
 "use client";
 
-import React from 'react';
+
 import { motion } from 'framer-motion';
 import { Home, PenTool, Hammer, Box, Layout, DollarSign, Sparkles, ArrowRight } from 'lucide-react';
-import { useMediaQuery } from "@/hooks/use-media-query";
+
 
 const servicesFunction = [
     {
@@ -39,7 +39,7 @@ const servicesFunction = [
 ];
 
 const Services = () => {
-    const isDesktop = useMediaQuery("(min-width: 1024px)");
+
 
     return (
         <section
@@ -141,11 +141,11 @@ const Services = () => {
                                     cursor: 'default',
                                     overflow: 'hidden'
                                 }}
-                                onMouseEnter={(e) => {
+                                onMouseEnter={(e: React.MouseEvent<HTMLDivElement>) => {
                                     e.currentTarget.style.boxShadow = '0 20px 40px -10px rgba(197, 160, 89, 0.15)';
                                     e.currentTarget.style.borderColor = 'rgba(197, 160, 89, 0.3)';
                                 }}
-                                onMouseLeave={(e) => {
+                                onMouseLeave={(e: React.MouseEvent<HTMLDivElement>) => {
                                     e.currentTarget.style.boxShadow = '0 10px 30px -10px rgba(0,0,0,0.05)';
                                     e.currentTarget.style.borderColor = 'rgba(0,0,0,0.03)';
                                 }}

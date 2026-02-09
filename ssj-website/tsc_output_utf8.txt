@@ -1,0 +1,15 @@
+﻿src/components/AboutUs.tsx(1,1): error TS6133: 'React' is declared but its value is never read.
+src/components/Footer.tsx(1,1): error TS6133: 'React' is declared but its value is never read.
+src/components/Header.tsx(1,8): error TS6133: 'React' is declared but its value is never read.
+src/components/Hero.tsx(1,1): error TS6133: 'React' is declared but its value is never read.
+src/components/HeroAnimated.tsx(1,1): error TS6133: 'React' is declared but its value is never read.
+src/components/Packages.tsx(1,1): error TS6133: 'React' is declared but its value is never read.
+src/components/Services.tsx(42,11): error TS6133: 'isDesktop' is declared but its value is never read.
+src/components/ui/construction-timeline.tsx(3,8): error TS6133: 'React' is declared but its value is never read.
+src/components/ui/vertical-cut-reveal.tsx(68,44): error TS2339: Property 'Segmenter' does not exist on type 'typeof Intl'.
+src/components/ui/vertical-cut-reveal.tsx(78,35): error TS7006: Parameter 'word' implicitly has an 'any' type.
+src/components/ui/vertical-cut-reveal.tsx(78,41): error TS7006: Parameter 'i' implicitly has an 'any' type.
+src/pages/Contact.tsx(1,1): error TS6133: 'React' is declared but its value is never read.
+src/pages/Home.tsx(1,1): error TS6133: 'React' is declared but its value is never read.
+src/pages/Projects.tsx(1,1): error TS6133: 'React' is declared but its value is never read.
+src/pages/Services.tsx(1,1): error TS6133: 'React' is declared but its value is never read.
