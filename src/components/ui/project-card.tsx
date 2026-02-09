@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { Tilt } from "@/components/ui/tilt";
 import { Spotlight } from "@/components/ui/spotlight";
 import { MapPin } from 'lucide-react';

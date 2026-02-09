@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { ArrowRight, Database } from 'lucide-react';
 
 export default function SchemaCard() {
