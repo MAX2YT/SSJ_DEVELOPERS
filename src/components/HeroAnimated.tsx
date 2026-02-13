@@ -3,7 +3,7 @@ import { ArrowRight, Home, Ruler, Hammer } from 'lucide-react';
 
 import './HeroAnimated.css';
 
-// Practical Independent House SVG Component
+// Modern 2-Floor Duplex Complex SVG Component
 const ModernHouse = () => (
     <svg
         viewBox="0 0 800 600"
@@ -15,106 +15,169 @@ const ModernHouse = () => (
             <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
                 <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(197, 160, 89, 0.05)" strokeWidth="0.5" />
             </pattern>
-            {/* Roof Tile Pattern */}
-            <pattern id="roofTiles" width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
-                <rect width="5" height="5" fill="#C5A059" fillOpacity="0.1" />
-            </pattern>
         </defs>
 
         {/* Background */}
         <rect width="800" height="600" fill="url(#grid)" />
 
-        {/* Street Level */}
-        <line x1="50" y1="500" x2="750" y2="500" stroke="#C5A059" strokeWidth="2" className="draw-line" />
+        {/* ===== GROUND LINE ===== */}
+        <line x1="80" y1="500" x2="720" y2="500" stroke="#C5A059" strokeWidth="2" className="draw-line" />
 
-        {/* Compound Wall (Front Boundary) */}
-        <g className="compound-wall">
-            {/* Wall Left */}
-            <rect x="50" y="440" width="150" height="60" fill="rgba(255,255,255,0.8)" stroke="#C5A059" strokeWidth="1.5" className="draw-line delay-6" />
-            <rect x="50" y="450" width="150" height="10" fill="none" stroke="#C5A059" strokeWidth="0.5" opacity="0.3" />
-            {/* Main Gate */}
-            <rect x="200" y="440" width="180" height="60" fill="none" stroke="#C5A059" strokeWidth="1.5" className="draw-line delay-6" />
-            {/* Gate Grills */}
-            <line x1="230" y1="440" x2="230" y2="500" stroke="#C5A059" strokeWidth="1" opacity="0.5" />
-            <line x1="260" y1="440" x2="260" y2="500" stroke="#C5A059" strokeWidth="1" opacity="0.5" />
-            <line x1="290" y1="440" x2="290" y2="500" stroke="#C5A059" strokeWidth="1" opacity="0.5" />
-            <line x1="320" y1="440" x2="320" y2="500" stroke="#C5A059" strokeWidth="1" opacity="0.5" />
-            <line x1="350" y1="440" x2="350" y2="500" stroke="#C5A059" strokeWidth="1" opacity="0.5" />
-            {/* Wall Right */}
-            <rect x="380" y="440" width="370" height="60" fill="rgba(255,255,255,0.8)" stroke="#C5A059" strokeWidth="1.5" className="draw-line delay-6" />
-            <text x="650" y="475" fill="#C5A059" fontSize="10" fontFamily="sans-serif" opacity="0.7">PLOT NO. 12</text>
-        </g>
-
-        {/* --- MAIN HOUSE STRUCTURE --- */}
+        {/* ===== LEFT TOWER (Taller Section) ===== */}
         <g className="house-structure">
-            {/* Ground Floor */}
-            <rect x="150" y="280" width="400" height="160" fill="rgba(255,255,255,0.5)" stroke="#C5A059" strokeWidth="2" className="draw-line delay-1" />
+            {/* Left tower - main wall */}
+            <rect x="150" y="120" width="180" height="380" fill="rgba(255,255,255,0.6)" stroke="#C5A059" strokeWidth="2" className="draw-line delay-1" />
+            {/* Left tower - roof slab (dark cap) */}
+            <rect x="140" y="108" width="200" height="16" fill="#C5A059" opacity="0.85" className="draw-line delay-2" />
+            {/* Left tower - secondary roof accent */}
+            <rect x="145" y="100" width="100" height="12" fill="#C5A059" opacity="0.6" className="draw-line delay-2" />
 
-            {/* Car Porch (Covered Parking) */}
-            <path d="M 550 350 L 550 440" stroke="#C5A059" strokeWidth="2" className="draw-line delay-2" /> {/* Pillar */}
-            <path d="M 550 440 L 700 440 L 680 350 Z" fill="none" stroke="none" /> {/* Ground Shadow? */}
-            <path d="M 450 280 L 600 280 L 550 350 L 400 350 Z" fill="url(#roofTiles)" stroke="#C5A059" strokeWidth="1.5" className="draw-line delay-2" /> {/* Porch Roof */}
+            {/* ===== RIGHT SECTION (Slightly Lower) ===== */}
+            {/* Right section - main wall */}
+            <rect x="330" y="170" width="220" height="330" fill="rgba(255,255,255,0.6)" stroke="#C5A059" strokeWidth="2" className="draw-line delay-1" />
+            {/* Right section - roof slab */}
+            <rect x="320" y="158" width="240" height="16" fill="#C5A059" opacity="0.85" className="draw-line delay-2" />
 
-            {/* First Floor */}
-            <rect x="150" y="140" width="350" height="140" fill="rgba(255,255,255,0.5)" stroke="#C5A059" strokeWidth="2" className="draw-line delay-3" />
-
-            {/* Roof / Terrace Parapet */}
-            <rect x="140" y="130" width="370" height="10" fill="#C5A059" stroke="none" opacity="0.8" className="draw-line delay-4" /> {/* Top Trim */}
-            <line x1="200" y1="90" x2="200" y2="130" stroke="#C5A059" strokeWidth="2" /> {/* Vertical Duct/Pipe - Fixed connection */}
-            <rect x="180" y="90" width="80" height="40" fill="none" stroke="#C5A059" strokeWidth="1.5" /> {/* Stair Headroom */}
+            {/* ===== FLOOR DIVIDER (between Ground & First Floor) ===== */}
+            <rect x="150" y="320" width="400" height="8" fill="#C5A059" opacity="0.5" className="draw-line delay-3" />
         </g>
 
-        {/* --- PRACTICAL ELEMENTS --- */}
+        {/* ===== FIRST FLOOR DETAILS ===== */}
         <g className="details">
-            {/* Front Door with Steps */}
-            <rect x="250" y="360" width="50" height="80" fill="rgba(197, 160, 89, 0.1)" stroke="#C5A059" strokeWidth="1.5" className="draw-line delay-2" />
-            <line x1="220" y1="440" x2="330" y2="440" stroke="#C5A059" strokeWidth="1" /> {/* Step 1 */}
-            <line x1="210" y1="450" x2="340" y2="450" stroke="#C5A059" strokeWidth="1" opacity="0.5" /> {/* Step 2 */}
 
-            {/* Ground Floor Windows with Sunshades (Chajjas) */}
-            <g className="window-gf-left">
-                <rect x="180" y="320" width="50" height="60" fill="white" stroke="#C5A059" strokeWidth="1" className="draw-line delay-3" />
-                <path d="M 170 320 L 240 320 L 235 310 L 175 310 Z" fill="#C5A059" opacity="0.4" /> {/* Sunshade */}
-                <line x1="205" y1="320" x2="205" y2="380" stroke="#C5A059" strokeWidth="0.5" />
-                <line x1="180" y1="350" x2="230" y2="350" stroke="#C5A059" strokeWidth="0.5" />
-            </g>
+            {/* -- Left Tower: First Floor Window with Blinds -- */}
+            <rect x="175" y="155" width="130" height="100" fill="white" stroke="#C5A059" strokeWidth="1.5" className="draw-line delay-3" />
+            {/* Window frame divider */}
+            <line x1="240" y1="155" x2="240" y2="255" stroke="#C5A059" strokeWidth="1" />
+            {/* Horizontal blinds */}
+            <line x1="175" y1="170" x2="305" y2="170" stroke="#C5A059" strokeWidth="0.5" opacity="0.5" />
+            <line x1="175" y1="185" x2="305" y2="185" stroke="#C5A059" strokeWidth="0.5" opacity="0.5" />
+            <line x1="175" y1="200" x2="305" y2="200" stroke="#C5A059" strokeWidth="0.5" opacity="0.5" />
+            <line x1="175" y1="215" x2="305" y2="215" stroke="#C5A059" strokeWidth="0.5" opacity="0.5" />
+            <line x1="175" y1="230" x2="305" y2="230" stroke="#C5A059" strokeWidth="0.5" opacity="0.5" />
+            <line x1="175" y1="245" x2="305" y2="245" stroke="#C5A059" strokeWidth="0.5" opacity="0.5" />
 
-            {/* Balcony (First Floor) */}
-            <rect x="350" y="240" width="120" height="40" fill="none" stroke="#C5A059" strokeWidth="1.5" className="draw-line delay-4" />
-            <line x1="350" y1="240" x2="470" y2="240" stroke="#C5A059" strokeWidth="2" /> {/* Handrail */}
-            <line x1="370" y1="240" x2="370" y2="280" stroke="#C5A059" strokeWidth="1" opacity="0.6" />
-            <line x1="390" y1="240" x2="390" y2="280" stroke="#C5A059" strokeWidth="1" opacity="0.6" />
-            <line x1="410" y1="240" x2="410" y2="280" stroke="#C5A059" strokeWidth="1" opacity="0.6" />
-            <line x1="430" y1="240" x2="430" y2="280" stroke="#C5A059" strokeWidth="1" opacity="0.6" />
-            <line x1="450" y1="240" x2="450" y2="280" stroke="#C5A059" strokeWidth="1" opacity="0.6" />
-            <line x1="470" y1="240" x2="470" y2="280" stroke="#C5A059" strokeWidth="1.5" /> {/* Use lighter stroke for end post to match others or bolder? Sames as others but visible */}
-            <rect x="360" y="160" width="60" height="80" fill="rgba(197, 160, 89, 0.1)" stroke="#C5A059" strokeWidth="1" /> {/* Balcony Door */}
+            {/* -- Left Tower: First Floor Small Window -- */}
+            <rect x="175" y="272" width="50" height="40" fill="white" stroke="#C5A059" strokeWidth="1" className="draw-line delay-4" />
+            <line x1="175" y1="282" x2="225" y2="282" stroke="#C5A059" strokeWidth="0.5" opacity="0.5" />
+            <line x1="175" y1="292" x2="225" y2="292" stroke="#C5A059" strokeWidth="0.5" opacity="0.5" />
+            <line x1="175" y1="302" x2="225" y2="302" stroke="#C5A059" strokeWidth="0.5" opacity="0.5" />
 
-            {/* Bedroom Window (First Floor) */}
-            <g className="window-ff-left">
-                <rect x="180" y="180" width="60" height="50" fill="white" stroke="#C5A059" strokeWidth="1" className="draw-line delay-5" />
-                <path d="M 170 180 L 250 180 L 245 170 L 175 170 Z" fill="#C5A059" opacity="0.4" /> {/* Sunshade */}
-            </g>
+            {/* -- Right Section: First Floor Balcony -- */}
+            {/* Balcony railing */}
+            <rect x="340" y="240" width="200" height="75" fill="none" stroke="#C5A059" strokeWidth="1.5" className="draw-line delay-4" />
+            {/* Balcony railing top bar */}
+            <line x1="340" y1="260" x2="540" y2="260" stroke="#C5A059" strokeWidth="2" />
+            {/* Railing vertical bars */}
+            <line x1="355" y1="260" x2="355" y2="315" stroke="#C5A059" strokeWidth="1" opacity="0.6" />
+            <line x1="375" y1="260" x2="375" y2="315" stroke="#C5A059" strokeWidth="1" opacity="0.6" />
+            <line x1="395" y1="260" x2="395" y2="315" stroke="#C5A059" strokeWidth="1" opacity="0.6" />
+            <line x1="415" y1="260" x2="415" y2="315" stroke="#C5A059" strokeWidth="1" opacity="0.6" />
+            <line x1="435" y1="260" x2="435" y2="315" stroke="#C5A059" strokeWidth="1" opacity="0.6" />
+            <line x1="455" y1="260" x2="455" y2="315" stroke="#C5A059" strokeWidth="1" opacity="0.6" />
+            <line x1="475" y1="260" x2="475" y2="315" stroke="#C5A059" strokeWidth="1" opacity="0.6" />
+            <line x1="495" y1="260" x2="495" y2="315" stroke="#C5A059" strokeWidth="1" opacity="0.6" />
+            <line x1="515" y1="260" x2="515" y2="315" stroke="#C5A059" strokeWidth="1" opacity="0.6" />
+            <line x1="535" y1="260" x2="535" y2="315" stroke="#C5A059" strokeWidth="1" opacity="0.6" />
+
+            {/* -- Right Section: First Floor Windows (above balcony) -- */}
+            <rect x="350" y="185" width="75" height="50" fill="white" stroke="#C5A059" strokeWidth="1" className="draw-line delay-3" />
+            <line x1="387" y1="185" x2="387" y2="235" stroke="#C5A059" strokeWidth="0.7" />
+            <line x1="350" y1="200" x2="425" y2="200" stroke="#C5A059" strokeWidth="0.5" opacity="0.5" />
+            <line x1="350" y1="215" x2="425" y2="215" stroke="#C5A059" strokeWidth="0.5" opacity="0.5" />
+
+            <rect x="450" y="185" width="85" height="50" fill="white" stroke="#C5A059" strokeWidth="1" className="draw-line delay-3" />
+            <line x1="492" y1="185" x2="492" y2="235" stroke="#C5A059" strokeWidth="0.7" />
+            <line x1="450" y1="200" x2="535" y2="200" stroke="#C5A059" strokeWidth="0.5" opacity="0.5" />
+            <line x1="450" y1="215" x2="535" y2="215" stroke="#C5A059" strokeWidth="0.5" opacity="0.5" />
         </g>
 
-        {/* Parked Car (Stylized outline) */}
-        <g className="car" opacity="0.6">
-            <path d="M 580 440 L 680 440 L 670 410 L 640 400 L 600 400 L 580 420 Z" fill="none" stroke="#C5A059" strokeWidth="1.5" className="draw-line delay-5" />
-            <circle cx="600" cy="440" r="12" fill="none" stroke="#C5A059" strokeWidth="1.5" />
-            <circle cx="660" cy="440" r="12" fill="none" stroke="#C5A059" strokeWidth="1.5" />
+        {/* ===== GROUND FLOOR DETAILS ===== */}
+        <g className="ground-floor">
+
+            {/* -- Central Entrance with Pillars -- */}
+            {/* Door */}
+            <rect x="300" y="370" width="60" height="130" fill="rgba(197, 160, 89, 0.1)" stroke="#C5A059" strokeWidth="1.5" className="draw-line delay-2" />
+            <line x1="330" y1="370" x2="330" y2="500" stroke="#C5A059" strokeWidth="0.8" /> {/* Door divider */}
+            {/* Door handle */}
+            <circle cx="322" cy="440" r="3" fill="#C5A059" opacity="0.8" />
+
+            {/* Left Pillar */}
+            <rect x="285" y="330" width="12" height="170" fill="rgba(197, 160, 89, 0.15)" stroke="#C5A059" strokeWidth="1.5" className="draw-line delay-2" />
+            {/* Right Pillar */}
+            <rect x="363" y="330" width="12" height="170" fill="rgba(197, 160, 89, 0.15)" stroke="#C5A059" strokeWidth="1.5" className="draw-line delay-2" />
+
+            {/* Entrance overhang / canopy */}
+            <rect x="275" y="328" width="110" height="8" fill="#C5A059" opacity="0.6" className="draw-line delay-3" />
+
+            {/* -- Left Side: Ground Floor Window with Blinds -- */}
+            <rect x="170" y="370" width="100" height="90" fill="white" stroke="#C5A059" strokeWidth="1.5" className="draw-line delay-4" />
+            <line x1="220" y1="370" x2="220" y2="460" stroke="#C5A059" strokeWidth="0.8" /> {/* Divider */}
+            {/* Horizontal blinds */}
+            <line x1="170" y1="385" x2="270" y2="385" stroke="#C5A059" strokeWidth="0.5" opacity="0.4" />
+            <line x1="170" y1="400" x2="270" y2="400" stroke="#C5A059" strokeWidth="0.5" opacity="0.4" />
+            <line x1="170" y1="415" x2="270" y2="415" stroke="#C5A059" strokeWidth="0.5" opacity="0.4" />
+            <line x1="170" y1="430" x2="270" y2="430" stroke="#C5A059" strokeWidth="0.5" opacity="0.4" />
+            <line x1="170" y1="445" x2="270" y2="445" stroke="#C5A059" strokeWidth="0.5" opacity="0.4" />
+            {/* Window sunshade */}
+            <rect x="165" y="362" width="110" height="8" fill="#C5A059" opacity="0.4" className="draw-line delay-4" />
+
+            {/* -- Right Side: Ground Floor Window with Blinds -- */}
+            <rect x="390" y="370" width="140" height="90" fill="white" stroke="#C5A059" strokeWidth="1.5" className="draw-line delay-4" />
+            <line x1="460" y1="370" x2="460" y2="460" stroke="#C5A059" strokeWidth="0.8" /> {/* Divider */}
+            {/* Horizontal blinds */}
+            <line x1="390" y1="385" x2="530" y2="385" stroke="#C5A059" strokeWidth="0.5" opacity="0.4" />
+            <line x1="390" y1="400" x2="530" y2="400" stroke="#C5A059" strokeWidth="0.5" opacity="0.4" />
+            <line x1="390" y1="415" x2="530" y2="415" stroke="#C5A059" strokeWidth="0.5" opacity="0.4" />
+            <line x1="390" y1="430" x2="530" y2="430" stroke="#C5A059" strokeWidth="0.5" opacity="0.4" />
+            <line x1="390" y1="445" x2="530" y2="445" stroke="#C5A059" strokeWidth="0.5" opacity="0.4" />
+            {/* Window sunshade */}
+            <rect x="385" y="362" width="150" height="8" fill="#C5A059" opacity="0.4" className="draw-line delay-4" />
+
+            {/* -- Entrance Steps -- */}
+            <line x1="290" y1="500" x2="370" y2="500" stroke="#C5A059" strokeWidth="2" />
+            <rect x="295" y="490" width="70" height="10" fill="rgba(197,160,89,0.1)" stroke="#C5A059" strokeWidth="0.8" className="draw-line delay-5" />
         </g>
 
-        {/* Trees/Plants */}
+        {/* ===== DECORATIVE VERTICAL PIPE / WATER TANK on Left Tower ===== */}
+        <g className="roof-details">
+            <rect x="155" y="70" width="40" height="38" fill="none" stroke="#C5A059" strokeWidth="1.5" className="draw-line delay-5" />
+            <rect x="148" y="65" width="54" height="8" fill="#C5A059" opacity="0.5" />
+            <line x1="175" y1="108" x2="175" y2="100" stroke="#C5A059" strokeWidth="1.5" />
+        </g>
+
+        {/* ===== COMPOUND WALL & GATE ===== */}
+        <g className="compound-wall">
+            {/* Left boundary wall */}
+            <rect x="80" y="470" width="70" height="30" fill="rgba(255,255,255,0.5)" stroke="#C5A059" strokeWidth="1.5" className="draw-line delay-6" />
+            {/* Left wall pillars */}
+            <rect x="80" y="465" width="10" height="35" fill="rgba(197,160,89,0.2)" stroke="#C5A059" strokeWidth="1" />
+            <rect x="140" y="465" width="10" height="35" fill="rgba(197,160,89,0.2)" stroke="#C5A059" strokeWidth="1" />
+
+            {/* Right boundary wall */}
+            <rect x="550" y="470" width="170" height="30" fill="rgba(255,255,255,0.5)" stroke="#C5A059" strokeWidth="1.5" className="draw-line delay-6" />
+            {/* Right wall pillars */}
+            <rect x="550" y="465" width="10" height="35" fill="rgba(197,160,89,0.2)" stroke="#C5A059" strokeWidth="1" />
+            <rect x="620" y="465" width="10" height="35" fill="rgba(197,160,89,0.2)" stroke="#C5A059" strokeWidth="1" />
+            <rect x="710" y="465" width="10" height="35" fill="rgba(197,160,89,0.2)" stroke="#C5A059" strokeWidth="1" />
+            <text x="640" y="488" fill="#C5A059" fontSize="9" fontFamily="sans-serif" opacity="0.7">PLOT NO. 12</text>
+        </g>
+
+        {/* ===== LANDSCAPE ===== */}
         <g className="landscape">
-            <path d="M 80 440 L 80 380" stroke="#C5A059" strokeWidth="2" />
-            <circle cx="80" cy="360" r="30" fill="rgba(197, 160, 89, 0.1)" stroke="#C5A059" strokeWidth="1" />
-            <circle cx="60" cy="370" r="20" fill="rgba(197, 160, 89, 0.1)" stroke="#C5A059" strokeWidth="1" />
-            <circle cx="100" cy="370" r="20" fill="rgba(197, 160, 89, 0.1)" stroke="#C5A059" strokeWidth="1" />
+            {/* Left small tree */}
+            <path d="M 110 470 L 110 430" stroke="#C5A059" strokeWidth="1.5" />
+            <circle cx="110" cy="418" r="16" fill="rgba(197, 160, 89, 0.08)" stroke="#C5A059" strokeWidth="1" />
+            <circle cx="100" cy="424" r="10" fill="rgba(197, 160, 89, 0.06)" stroke="#C5A059" strokeWidth="0.8" />
+
+            {/* Right small plant */}
+            <path d="M 580 470 L 580 445" stroke="#C5A059" strokeWidth="1" />
+            <circle cx="580" cy="438" r="10" fill="rgba(197, 160, 89, 0.06)" stroke="#C5A059" strokeWidth="0.8" />
         </g>
 
         {/* Floating Labels */}
         <g className="labels">
-            <text x="500" y="550" textAnchor="middle" fill="#C5A059" fontSize="14" letterSpacing="1" className="fade-in delay-7">PRACTICAL VILLA • 2200 SQ.FT</text>
+            <text x="400" y="545" textAnchor="middle" fill="#C5A059" fontSize="14" letterSpacing="1" className="fade-in delay-7">MODERN DUPLEX COMPLEX • 3500 SQ.FT</text>
         </g>
     </svg>
 );
