@@ -5,25 +5,15 @@ import './Footer.css';
 const Footer = () => {
     return (
         <footer className="footer">
-            <div className="footer-embossed-bg" aria-hidden="true">SSJ DEVELOPERS</div>
+            <img src="/logo.png" className="footer-embossed-bg" aria-hidden="true" alt="" />
             <div className="container">
                 <div className="footer-grid">
                     <div>
                         <p className="mb-6 max-w-sm">
-                            We provide complete construction and real estate solutions in Avadi and surrounding areas. Quality and integrity are our core values.
-                        </p>
+At SSJ Developers, we don’t just build structures; we create homes and investment opportunities tailored to the growing landscape of Avadi. With a deep-rooted understanding of the local market and a commitment to architectural excellence, we provide end-to-end construction and real estate solutions.                        </p>
                     </div>
 
-                    <div>
-                        <h3>Quick Links</h3>
-                        <div className="footer-links">
-                            <a href="#home" className="footer-link">Home</a>
-                            <a href="#services" className="footer-link">Services</a>
-                            <a href="#packages" className="footer-link">Packages</a>
-                            <a href="#contact" className="footer-link">Contact Us</a>
-                        </div>
-                    </div>
-
+                    <div className="footer-links-group">
                     <div>
                         <h3>Social Media Links</h3>
                         <div className="footer-links">
@@ -40,6 +30,17 @@ const Footer = () => {
                                 <span>Facebook</span>
                             </a>
                         </div>
+                    </div>
+
+                    <div>
+                        <h3>Quick Links</h3>
+                        <div className="footer-links">
+                            <a href="#home" className="footer-link">Home</a>
+                            <a href="#services" className="footer-link">Services</a>
+                            <a href="#packages" className="footer-link">Packages</a>
+                            <a href="#contact" className="footer-link">Contact Us</a>
+                        </div>
+                    </div>
                     </div>
                 </div>
 
