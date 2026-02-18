@@ -5,13 +5,10 @@ import './Footer.css';
 const Footer = () => {
     return (
         <footer className="footer">
+            <div className="footer-embossed-bg" aria-hidden="true">SSJ DEVELOPERS</div>
             <div className="container">
                 <div className="footer-grid">
                     <div>
-                        <div className="flex items-center gap-2 mb-6">
-                            {/* Updated logo display for light background */}
-                            <img src="/logo.png" alt="SSJ Developers" className="h-12 w-auto" style={{ maxHeight: '60px' }} />
-                        </div>
                         <p className="mb-6 max-w-sm">
                             We provide complete construction and real estate solutions in Avadi and surrounding areas. Quality and integrity are our core values.
                         </p>
