@@ -45,7 +45,7 @@ At SSJ Developers, we don’t just build structures; we create homes and investm
                 </div>
 
                 <div className="footer-bottom">
-                    <p>&copy; {new Date().getFullYear()} SSJ Developers. All rights reserved.</p>
+                    <p>&copy; {new Date().getFullYear()} Developed By <a href="https://caarapace.com/" target="_blank" rel="noopener noreferrer" className="footer-link caarapace-link">Caarapace</a>.</p>
                 </div>
             </div>
         </footer>
