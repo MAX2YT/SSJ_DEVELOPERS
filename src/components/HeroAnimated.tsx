@@ -1,208 +1,313 @@
-
+import { useRef, useMemo, useCallback } from 'react';
+import { Canvas, useFrame, useThree } from '@react-three/fiber';
+import * as THREE from 'three';
 import { ArrowRight, Home, Ruler, Hammer } from 'lucide-react';
-
 import './HeroAnimated.css';
 
-// Blueprint-style Modern House SVG Component
-const ModernHouse = () => (
-    <svg
-        viewBox="0 0 800 580"
-        className="house-svg"
-        xmlns="http://www.w3.org/2000/svg"
-    >
-        <defs>
-            {/* Subtle grid pattern */}
-            <pattern id="bp-grid-sm" width="20" height="20" patternUnits="userSpaceOnUse">
-                <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(197,160,89,0.12)" strokeWidth="0.5" />
-            </pattern>
-            <pattern id="bp-grid-lg" width="100" height="100" patternUnits="userSpaceOnUse">
-                <path d="M 100 0 L 0 0 0 100" fill="none" stroke="rgba(197,160,89,0.15)" strokeWidth="1" />
-            </pattern>
-            {/* Gold glow filter */}
-            <filter id="bp-glow">
-                <feGaussianBlur stdDeviation="2.5" result="blur" />
-                <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
-            </filter>
-            <filter id="bp-glow-strong">
-                <feGaussianBlur stdDeviation="4" result="blur" />
-                <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
-            </filter>
-        </defs>
+// ─── Blueprint gold color ───
+const GOLD = '#C5A059';
+const GOLD_FAINT = '#d4b97a';
 
-        {/* Transparent background — inherits page white */}
-        <rect width="800" height="580" fill="transparent" />
-        <rect width="800" height="580" fill="url(#bp-grid-sm)" opacity="0.5" />
-        <rect width="800" height="580" fill="url(#bp-grid-lg)" opacity="0.5" />
+// ─── Smooth easing helpers ───
+const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3);
+const smoothstep = (t: number) => t * t * (3 - 2 * t);
 
-        {/* ”€”€ GROUND LINE ”€”€ */}
-        <line x1="60" y1="490" x2="740" y2="490" stroke="#C5A059" strokeWidth="1.5" opacity="0.7" filter="url(#bp-glow)" className="draw-line" />
+// ─── Helper: Animated wireframe box ───
+interface WireBoxProps {
+    position: [number, number, number];
+    size: [number, number, number];
+    delay: number;
+    color?: string;
+}
 
-        {/* ”€”€ LEFT TALL TOWER ”€”€ */}
-        {/* Main body */}
-        <rect x="100" y="130" width="185" height="360" fill="rgba(197,160,89,0.05)" stroke="#C5A059" strokeWidth="1.8" filter="url(#bp-glow)" className="draw-line delay-1" />
-        {/* Roof cap flat slab */}
-        <rect x="88" y="118" width="209" height="14" fill="rgba(197,160,89,0.10)" stroke="#C5A059" strokeWidth="1.8" filter="url(#bp-glow)" className="draw-line delay-2" />
-        {/* Parapet top */}
-        <rect x="88" y="108" width="100" height="12" fill="rgba(197,160,89,0.08)" stroke="#C5A059" strokeWidth="1.4" className="draw-line delay-2" />
+const WireBox = ({ position, size, delay, color = GOLD }: WireBoxProps) => {
+    const ref = useRef<THREE.Group>(null);
+    const matRef = useRef<THREE.LineBasicMaterial>(null);
 
-        {/* Vertical columns on left tower */}
-        <line x1="120" y1="130" x2="120" y2="490" stroke="#C5A059" strokeWidth="1" opacity="0.5" />
-        <line x1="165" y1="130" x2="165" y2="490" stroke="#C5A059" strokeWidth="1" opacity="0.5" />
-        <line x1="210" y1="130" x2="210" y2="490" stroke="#C5A059" strokeWidth="1" opacity="0.5" />
-        <line x1="255" y1="130" x2="255" y2="490" stroke="#C5A059" strokeWidth="1" opacity="0.5" />
+    const edges = useMemo(() => {
+        const box = new THREE.BoxGeometry(size[0], size[1], size[2]);
+        return new THREE.EdgesGeometry(box);
+    }, [size]);
 
-        {/* Floor divider */}
-        <rect x="100" y="316" width="185" height="7" fill="rgba(197,160,89,0.10)" stroke="#C5A059" strokeWidth="1.4" className="draw-line delay-3" />
+    useFrame(({ clock }) => {
+        const elapsed = clock.getElapsedTime();
+        const raw = Math.max(0, (elapsed - delay) / 2.0);
+        const progress = Math.min(1, easeOutCubic(raw));
 
-        {/* ”€”€ RIGHT LOWER BLOCK ”€”€ */}
-        <rect x="285" y="180" width="230" height="310" fill="rgba(197,160,89,0.04)" stroke="#C5A059" strokeWidth="1.8" filter="url(#bp-glow)" className="draw-line delay-1" />
-        {/* Roof slab */}
-        <rect x="273" y="168" width="254" height="14" fill="rgba(197,160,89,0.10)" stroke="#C5A059" strokeWidth="1.8" filter="url(#bp-glow)" className="draw-line delay-2" />
+        if (matRef.current) {
+            matRef.current.opacity = progress * 0.85;
+        }
+        if (ref.current) {
+            const s = progress > 0.01 ? 0.01 + progress * 0.99 : 0;
+            ref.current.scale.set(s, s, s);
+        }
+    });
 
-        {/* Vertical columns on right block */}
-        <line x1="310" y1="180" x2="310" y2="490" stroke="#C5A059" strokeWidth="1" opacity="0.4" />
-        <line x1="360" y1="180" x2="360" y2="490" stroke="#C5A059" strokeWidth="1" opacity="0.4" />
-        <line x1="410" y1="180" x2="410" y2="490" stroke="#C5A059" strokeWidth="1" opacity="0.4" />
-        <line x1="460" y1="180" x2="460" y2="490" stroke="#C5A059" strokeWidth="1" opacity="0.4" />
-        <line x1="490" y1="180" x2="490" y2="490" stroke="#C5A059" strokeWidth="1" opacity="0.4" />
+    return (
+        <group ref={ref} position={position}>
+            <lineSegments geometry={edges}>
+                <lineBasicMaterial ref={matRef} color={color} transparent opacity={0} depthWrite={false} />
+            </lineSegments>
+        </group>
+    );
+};
 
-        {/* Floor divider right */}
-        <rect x="285" y="334" width="230" height="7" fill="rgba(197,160,89,0.08)" stroke="#C5A059" strokeWidth="1.2" className="draw-line delay-3" />
+// ─── Helper: Animated single line ───
+interface LineProps {
+    points: [number, number, number][];
+    delay: number;
+    color?: string;
+    opacity?: number;
+}
 
-        {/* ”€”€ FAR RIGHT GARAGE / ANNEX ”€”€ */}
-        <rect x="515" y="310" width="155" height="180" fill="rgba(30,90,180,0.08)" stroke="#C5A059" strokeWidth="1.5" className="draw-line delay-2" />
-        {/* Annex roof slab */}
-        <rect x="505" y="298" width="175" height="14" fill="rgba(197,160,89,0.08)" stroke="#C5A059" strokeWidth="1.5" className="draw-line delay-2" />
+const WireLine = ({ points, delay, color = GOLD, opacity = 0.6 }: LineProps) => {
+    const matRef = useRef<THREE.LineBasicMaterial>(null);
 
-        {/* Connecting covered walkway / breezeway top */}
-        <rect x="515" y="268" width="90" height="10" fill="rgba(197,160,89,0.06)" stroke="#C5A059" strokeWidth="1.2" className="draw-line delay-3" />
-        <line x1="515" y1="278" x2="515" y2="310" stroke="#C5A059" strokeWidth="1.2" opacity="0.5" />
-        <line x1="605" y1="278" x2="605" y2="310" stroke="#C5A059" strokeWidth="1.2" opacity="0.5" />
+    const geo = useMemo(() => {
+        const verts = points.map(p => new THREE.Vector3(...p));
+        return new THREE.BufferGeometry().setFromPoints(verts);
+    }, [points]);
 
-        {/* ”€”€ FIRST FLOOR WINDOWS €” Left Tower ”€”€ */}
-        {/* Large glazed curtain wall */}
-        <rect x="110" y="148" width="165" height="110" fill="rgba(197,160,89,0.10)" stroke="#C5A059" strokeWidth="1.5" filter="url(#bp-glow)" className="draw-line delay-3" />
-        {/* Curtain wall vertical mullions */}
-        <line x1="152" y1="148" x2="152" y2="258" stroke="#C5A059" strokeWidth="1" opacity="0.6" />
-        <line x1="193" y1="148" x2="193" y2="258" stroke="#C5A059" strokeWidth="1" opacity="0.6" />
-        <line x1="234" y1="148" x2="234" y2="258" stroke="#C5A059" strokeWidth="1" opacity="0.6" />
-        {/* Horizontal rail */}
-        <line x1="110" y1="198" x2="275" y2="198" stroke="#C5A059" strokeWidth="1" opacity="0.5" />
-        {/* Glass highlight €” cyan tinted panel */}
-        <rect x="152" y="148" width="41" height="50" fill="rgba(197,160,89,0.15)" stroke="none" className="draw-line delay-3" />
+    useFrame(({ clock }) => {
+        const elapsed = clock.getElapsedTime();
+        const raw = Math.max(0, (elapsed - delay) / 1.8);
+        const progress = Math.min(1, easeOutCubic(raw));
+        if (matRef.current) {
+            matRef.current.opacity = progress * opacity;
+        }
+    });
 
-        {/* Small top window left tower */}
-        <rect x="110" y="276" width="55" height="32" fill="rgba(197,160,89,0.07)" stroke="#C5A059" strokeWidth="1.2" className="draw-line delay-4" />
-        <line x1="137" y1="276" x2="137" y2="308" stroke="#C5A059" strokeWidth="0.8" opacity="0.5" />
+    return (
+        <line geometry={geo}>
+            <lineBasicMaterial ref={matRef} color={color} transparent opacity={0} depthWrite={false} />
+        </line>
+    );
+};
 
-        {/* ”€”€ FIRST FLOOR WINDOWS €” Right Block ”€”€ */}
-        {/* Left window group */}
-        <rect x="295" y="196" width="85" height="60" fill="rgba(197,160,89,0.07)" stroke="#C5A059" strokeWidth="1.4" className="draw-line delay-3" />
-        <line x1="337" y1="196" x2="337" y2="256" stroke="#C5A059" strokeWidth="0.8" opacity="0.5" />
-        <line x1="295" y1="220" x2="380" y2="220" stroke="#C5A059" strokeWidth="0.7" opacity="0.4" />
+// ─── Blueprint Grid ───
+const Grid = () => {
+    const ref = useRef<THREE.GridHelper>(null);
 
-        {/* Right window group */}
-        <rect x="400" y="196" width="105" height="60" fill="rgba(197,160,89,0.07)" stroke="#C5A059" strokeWidth="1.4" className="draw-line delay-3" />
-        <line x1="452" y1="196" x2="452" y2="256" stroke="#C5A059" strokeWidth="0.8" opacity="0.5" />
-        <line x1="400" y1="220" x2="505" y2="220" stroke="#C5A059" strokeWidth="0.7" opacity="0.4" />
+    useFrame(({ clock }) => {
+        const t = clock.getElapsedTime();
+        const opacity = Math.min(0.2, t * 0.05);
+        if (ref.current) {
+            const mat = ref.current.material as THREE.LineBasicMaterial;
+            mat.opacity = opacity;
+            mat.transparent = true;
+        }
+    });
 
-        {/* BALCONY / TERRACE - Right Block first floor */}
-        <rect x="295" y="256" width="210" height="78" fill="rgba(197,160,89,0.03)" stroke="#C5A059" strokeWidth="1.4" className="draw-line delay-4" />
-        {/* Balcony railing top rail */}
-        <line x1="295" y1="272" x2="505" y2="272" stroke="#C5A059" strokeWidth="2" opacity="0.9" filter="url(#bp-glow)" />
-        {/* Railing balusters */}
-        {[305, 325, 345, 365, 385, 405, 425, 445, 465, 485].map((x, i) => (
-            <line key={i} x1={x} y1="272" x2={x} y2="334" stroke="rgba(197,160,89,0.35)" strokeWidth="1" opacity="1" />
-        ))}
+    return (
+        <gridHelper
+            ref={ref}
+            args={[30, 30, new THREE.Color(GOLD), new THREE.Color(GOLD)]}
+            position={[0, 0, 0]}
+        />
+    );
+};
 
-        {/* ”€”€ GROUND FLOOR €” Entrance & Doors ”€”€ */}
-        {/* Main entrance door */}
-        <rect x="268" y="370" width="64" height="120" fill="rgba(197,160,89,0.06)" stroke="#C5A059" strokeWidth="1.6" filter="url(#bp-glow)" className="draw-line delay-2" />
-        <line x1="300" y1="370" x2="300" y2="490" stroke="#C5A059" strokeWidth="0.8" opacity="0.5" />
-        <circle cx="290" cy="432" r="3.5" fill="#C5A059" opacity="0.9" />
+// ─── Smooth Camera Controller ───
+const CameraRig = () => {
+    const { camera } = useThree();
+    const target = useMemo(() => new THREE.Vector3(0, 2.5, 0), []);
 
-        {/* Left pillar */}
-        <rect x="253" y="334" width="13" height="156" fill="rgba(197,160,89,0.06)" stroke="#C5A059" strokeWidth="1.5" className="draw-line delay-2" />
-        {/* Right pillar */}
-        <rect x="334" y="334" width="13" height="156" fill="rgba(197,160,89,0.06)" stroke="#C5A059" strokeWidth="1.5" className="draw-line delay-2" />
-        {/* Entrance lintel */}
-        <rect x="245" y="332" width="110" height="9" fill="rgba(197,160,89,0.14)" stroke="#C5A059" strokeWidth="1.4" className="draw-line delay-3" />
+    useFrame(({ clock }) => {
+        const t = clock.getElapsedTime();
 
-        {/* Ground floor left window */}
-        <rect x="110" y="366" width="120" height="90" fill="rgba(197,160,89,0.06)" stroke="#C5A059" strokeWidth="1.5" className="draw-line delay-4" />
-        <line x1="170" y1="366" x2="170" y2="456" stroke="#C5A059" strokeWidth="0.8" opacity="0.5" />
-        {[378, 396, 414, 432, 450].map((y, i) => (
-            <line key={i} x1="110" y1={y} x2="230" y2={y} stroke="#C5A059" strokeWidth="0.6" opacity="0.4" />
-        ))}
-        <rect x="104" y="358" width="132" height="9" fill="rgba(197,160,89,0.08)" stroke="#C5A059" strokeWidth="1" className="draw-line delay-4" />
+        let x: number, y: number, z: number;
 
-        {/* Ground floor right window */}
-        <rect x="360" y="366" width="130" height="90" fill="rgba(197,160,89,0.06)" stroke="#C5A059" strokeWidth="1.5" className="draw-line delay-4" />
-        <line x1="425" y1="366" x2="425" y2="456" stroke="#C5A059" strokeWidth="0.8" opacity="0.5" />
-        {[378, 396, 414, 432, 450].map((y, i) => (
-            <line key={i} x1="360" y1={y} x2="490" y2={y} stroke="#C5A059" strokeWidth="0.6" opacity="0.4" />
-        ))}
-        <rect x="354" y="358" width="142" height="9" fill="rgba(197,160,89,0.08)" stroke="#C5A059" strokeWidth="1" className="draw-line delay-4" />
+        if (t < 5) {
+            // Phase 1: Smooth zoom from far high angle
+            const p = easeOutCubic(t / 5);
+            x = THREE.MathUtils.lerp(30, 15, p);
+            y = THREE.MathUtils.lerp(20, 10, p);
+            z = THREE.MathUtils.lerp(30, 18, p);
+        } else if (t < 12) {
+            // Phase 2: Smooth orbit to 3/4 front view
+            const p = smoothstep((t - 5) / 7);
+            const angle = THREE.MathUtils.lerp(0.88, 0.5, p);
+            const radius = THREE.MathUtils.lerp(23, 22, p);
+            y = THREE.MathUtils.lerp(10, 8, p);
+            x = Math.sin(angle) * radius;
+            z = Math.cos(angle) * radius;
+        } else {
+            // Phase 3: Gentle idle float
+            const idle = t - 12;
+            const angle = 0.5 + Math.sin(idle * 0.12) * 0.04;
+            const radius = 22 + Math.sin(idle * 0.08) * 0.3;
+            y = 8 + Math.sin(idle * 0.1) * 0.2;
+            x = Math.sin(angle) * radius;
+            z = Math.cos(angle) * radius;
+        }
 
-        {/* ”€”€ GARAGE DOOR (annex) ”€”€ */}
-        <rect x="527" y="378" width="125" height="112" fill="rgba(197,160,89,0.03)" stroke="#C5A059" strokeWidth="1.5" className="draw-line delay-4" />
-        {[398, 418, 438, 458, 478].map((y, i) => (
-            <line key={i} x1="527" y1={y} x2="652" y2={y} stroke="#C5A059" strokeWidth="0.8" opacity="0.5" />
-        ))}
-        <line x1="589" y1="378" x2="589" y2="490" stroke="#C5A059" strokeWidth="0.8" opacity="0.5" />
+        camera.position.set(x, y, z);
+        camera.lookAt(target);
+    });
 
-        {/* ”€”€ ENTRANCE STEPS ”€”€ */}
-        <rect x="255" y="480" width="90" height="10" fill="rgba(197,160,89,0.05)" stroke="#C5A059" strokeWidth="0.9" className="draw-line delay-5" />
-        <rect x="260" y="470" width="80" height="10" fill="rgba(197,160,89,0.04)" stroke="#C5A059" strokeWidth="0.9" className="draw-line delay-5" />
+    return null;
+};
 
-        {/* ”€”€ ROOF: Water tank / parapet box ”€”€ */}
-        <rect x="100" y="72" width="42" height="38" fill="rgba(197,160,89,0.04)" stroke="#C5A059" strokeWidth="1.4" className="draw-line delay-5" />
-        <rect x="94" y="65" width="54" height="9" fill="rgba(197,160,89,0.10)" stroke="#C5A059" strokeWidth="1.2" filter="url(#bp-glow)" />
-        <line x1="121" y1="108" x2="121" y2="100" stroke="#C5A059" strokeWidth="1.5" opacity="0.7" />
+// ─── Complete House (clean, no overlapping edges) ───
+const House = () => {
+    return (
+        <group>
+            <Grid />
 
-        {/* ”€”€ COMPOUND WALL ”€”€ */}
-        <rect x="60" y="464" width="80" height="26" fill="rgba(197,160,89,0.03)" stroke="#C5A059" strokeWidth="1.4" className="draw-line delay-6" />
-        <rect x="60" y="458" width="12" height="32" fill="rgba(197,160,89,0.06)" stroke="#C5A059" strokeWidth="1" />
-        <rect x="128" y="458" width="12" height="32" fill="rgba(197,160,89,0.06)" stroke="#C5A059" strokeWidth="1" />
+            {/* ══ FOUNDATION ══ */}
+            <WireBox position={[0, 0.06, 0]} size={[18, 0.1, 10]} delay={0.5} />
 
-        <rect x="660" y="464" width="80" height="26" fill="rgba(197,160,89,0.03)" stroke="#C5A059" strokeWidth="1.4" className="draw-line delay-6" />
-        <rect x="660" y="458" width="12" height="32" fill="rgba(197,160,89,0.06)" stroke="#C5A059" strokeWidth="1" />
-        <rect x="728" y="458" width="12" height="32" fill="rgba(197,160,89,0.06)" stroke="#C5A059" strokeWidth="1" />
+            {/* ══ MAIN BLOCK (center) — 3 floors ══ */}
+            <WireBox position={[0, 3, 0]} size={[7, 5.8, 6]} delay={1.2} />
+            {/* Floor slabs */}
+            <WireLine points={[[-3.5, 2, -3], [3.5, 2, -3], [3.5, 2, 3], [-3.5, 2, 3], [-3.5, 2, -3]]} delay={2.8} opacity={0.4} />
+            <WireLine points={[[-3.5, 4, -3], [3.5, 4, -3], [3.5, 4, 3], [-3.5, 4, 3], [-3.5, 4, -3]]} delay={3.0} opacity={0.4} />
+            {/* Roof overhang */}
+            <WireBox position={[0, 6.05, 0]} size={[7.8, 0.15, 6.6]} delay={3.8} />
 
-        {/* ”€”€ TREES ”€”€ */}
-        <line x1="90" y1="462" x2="90" y2="420" stroke="#C5A059" strokeWidth="1.4" opacity="0.6" />
-        <circle cx="90" cy="408" r="17" fill="rgba(197,160,89,0.06)" stroke="#C5A059" strokeWidth="1.2" opacity="0.7" />
-        <circle cx="79" cy="416" r="11" fill="rgba(80,160,255,0.07)" stroke="#C5A059" strokeWidth="1" opacity="0.6" />
+            {/* ══ PENTHOUSE ══ */}
+            <WireBox position={[-0.8, 7.2, 0]} size={[3.5, 2, 3.8]} delay={4.2} />
+            <WireBox position={[-0.8, 8.35, 0]} size={[3.9, 0.12, 4.2]} delay={4.5} color={GOLD_FAINT} />
 
-        <line x1="690" y1="462" x2="690" y2="432" stroke="#C5A059" strokeWidth="1.2" opacity="0.6" />
-        <circle cx="690" cy="422" r="12" fill="rgba(197,160,89,0.05)" stroke="#C5A059" strokeWidth="1" opacity="0.6" />
+            {/* ══ LEFT WING ══ */}
+            <WireBox position={[-6.2, 2.3, 0.3]} size={[4.2, 4.4, 5.2]} delay={1.8} />
+            <WireBox position={[-6.2, 4.65, 0.3]} size={[4.6, 0.12, 5.6]} delay={4.0} color={GOLD_FAINT} />
+            {/* Floor */}
+            <WireLine points={[[-8.3, 2, -2.3], [-4.1, 2, -2.3], [-4.1, 2, 2.9], [-8.3, 2, 2.9], [-8.3, 2, -2.3]]} delay={3.2} opacity={0.35} />
 
-        {/* ”€”€ DIMENSION LINES ”€”€ */}
-        <line x1="100" y1="520" x2="515" y2="520" stroke="#C5A059" strokeWidth="0.7" opacity="0.4" strokeDasharray="4 3" />
-        <line x1="100" y1="516" x2="100" y2="524" stroke="#C5A059" strokeWidth="0.7" opacity="0.4" />
-        <line x1="515" y1="516" x2="515" y2="524" stroke="#C5A059" strokeWidth="0.7" opacity="0.4" />
-        <text x="307" y="535" textAnchor="middle" fill="#C5A059" fontSize="9" opacity="0.75" fontFamily="monospace">18.5 M</text>
+            {/* ══ RIGHT WING ══ */}
+            <WireBox position={[5.8, 2.6, 0]} size={[4, 5, 5.8]} delay={2.0} />
+            <WireBox position={[5.8, 5.25, 0]} size={[4.4, 0.12, 6.2]} delay={4.1} color={GOLD_FAINT} />
+            {/* Floor */}
+            <WireLine points={[[3.8, 2, -2.9], [7.8, 2, -2.9], [7.8, 2, 2.9], [3.8, 2, 2.9], [3.8, 2, -2.9]]} delay={3.3} opacity={0.35} />
 
-        <line x1="65" y1="130" x2="65" y2="490" stroke="#C5A059" strokeWidth="0.7" opacity="0.5" strokeDasharray="4 3" />
-        <line x1="61" y1="130" x2="69" y2="130" stroke="#C5A059" strokeWidth="0.7" opacity="0.5" />
-        <line x1="61" y1="490" x2="69" y2="490" stroke="#C5A059" strokeWidth="0.7" opacity="0.5" />
-        <text x="46" y="315" textAnchor="middle" fill="#C5A059" fontSize="9" opacity="0.75" fontFamily="monospace" transform="rotate(-90,46,315)">9.5 M</text>
+            {/* ══ GARAGE ══ */}
+            <WireBox position={[9.8, 1.5, 0]} size={[3.5, 2.8, 4.8]} delay={2.5} />
+            <WireBox position={[9.8, 3.05, 0]} size={[3.8, 0.12, 5.1]} delay={4.3} color={GOLD_FAINT} />
 
-        {/* ”€”€ LABEL ”€”€ */}
-        <text x="400" y="560" textAnchor="middle" fill="#C5A059" fontSize="11" letterSpacing="2.5" opacity="0.75" fontFamily="monospace" className="fade-in delay-7">MODERN DUPLEX COMPLEX  €¢  3500 SQ.FT</text>
+            {/* ══ FRONT WINDOWS — Main Block top floor ══ */}
+            <WireBox position={[-1.8, 4.8, 3.01]} size={[2.6, 1.5, 0.02]} delay={5.0} />
+            <WireLine points={[[-1.8, 4.05, 3.02], [-1.8, 5.55, 3.02]]} delay={5.2} opacity={0.35} />
+            <WireBox position={[1.6, 4.8, 3.01]} size={[1.6, 1.5, 0.02]} delay={5.3} />
 
-        {/* EPS watermark corner */}
-        <text x="740" y="20" textAnchor="end" fill="#C5A059" fontSize="9" opacity="0.45" fontFamily="monospace">EPS</text>
-    </svg>
-);
+            {/* Main Block mid floor windows */}
+            <WireBox position={[-1.5, 2.8, 3.01]} size={[2, 1.2, 0.02]} delay={5.6} />
+            <WireBox position={[1.5, 2.8, 3.01]} size={[2, 1.2, 0.02]} delay={5.8} />
 
+            {/* Main Block ground floor windows */}
+            <WireBox position={[-2, 0.9, 3.01]} size={[2.2, 1.2, 0.02]} delay={6.2} />
+            <WireBox position={[2.2, 0.9, 3.01]} size={[2, 1.2, 0.02]} delay={6.4} />
+
+            {/* ══ GRAND ENTRANCE ══ */}
+            <WireBox position={[0, 1.15, 3.01]} size={[1.4, 2.1, 0.02]} delay={5.4} />
+            <WireLine points={[[0, 0.1, 3.02], [0, 2.2, 3.02]]} delay={5.5} opacity={0.4} />
+            {/* Pillars */}
+            <WireBox position={[-1, 1.15, 3.2]} size={[0.2, 2.2, 0.2]} delay={5.6} />
+            <WireBox position={[1, 1.15, 3.2]} size={[0.2, 2.2, 0.2]} delay={5.6} />
+            {/* Portico */}
+            <WireBox position={[0, 2.35, 3.3]} size={[2.4, 0.1, 0.8]} delay={5.8} />
+            {/* Steps */}
+            <WireBox position={[0, 0.08, 3.6]} size={[1.8, 0.08, 0.5]} delay={7.5} color={GOLD_FAINT} />
+            <WireBox position={[0, 0.02, 3.95]} size={[2.1, 0.05, 0.4]} delay={7.7} color={GOLD_FAINT} />
+
+            {/* ══ LEFT WING WINDOWS ══ */}
+            <WireBox position={[-6, 3.5, 2.91]} size={[1.6, 1, 0.02]} delay={6.0} />
+            <WireBox position={[-7.5, 3.5, 2.91]} size={[1, 1, 0.02]} delay={6.1} />
+            <WireBox position={[-6.2, 1, 2.91]} size={[2.2, 1.3, 0.02]} delay={6.3} />
+
+            {/* ══ RIGHT WING WINDOWS ══ */}
+            <WireBox position={[5.3, 3.6, 2.91]} size={[1.4, 1.1, 0.02]} delay={6.2} />
+            <WireBox position={[6.8, 3.6, 2.91]} size={[1.1, 1.1, 0.02]} delay={6.3} />
+            <WireBox position={[5.5, 1, 2.91]} size={[1.3, 1.3, 0.02]} delay={6.5} />
+            <WireBox position={[7, 1, 2.91]} size={[1.3, 1.3, 0.02]} delay={6.6} />
+
+            {/* ══ PENTHOUSE WINDOWS ══ */}
+            <WireBox position={[-1.8, 7.2, 1.91]} size={[1, 1, 0.02]} delay={7.0} />
+            <WireBox position={[-0.2, 7.2, 1.91]} size={[1.4, 1, 0.02]} delay={7.1} />
+
+            {/* ══ BALCONY — Main top floor ══ */}
+            <WireBox position={[2.2, 4.05, 3.5]} size={[2.2, 0.06, 1]} delay={6.8} color={GOLD_FAINT} />
+            {/* Railing posts */}
+            {[1.2, 1.8, 2.4, 3.0, 3.3].map((x, i) => (
+                <WireLine key={`br1-${i}`} points={[[x, 4.05, 4], [x, 4.65, 4]]} delay={7.0 + i * 0.08} opacity={0.4} />
+            ))}
+            <WireLine points={[[1.2, 4.65, 4], [3.3, 4.65, 4]]} delay={7.5} opacity={0.5} />
+
+            {/* ══ BALCONY — Left wing ══ */}
+            <WireBox position={[-6.2, 2.5, 3.3]} size={[2.6, 0.06, 0.8]} delay={7.2} color={GOLD_FAINT} />
+            {[-7.5, -6.8, -6.1, -5.4, -4.9].map((x, i) => (
+                <WireLine key={`br2-${i}`} points={[[x, 2.5, 3.7], [x, 3.1, 3.7]]} delay={7.4 + i * 0.08} opacity={0.35} />
+            ))}
+            <WireLine points={[[-7.5, 3.1, 3.7], [-4.9, 3.1, 3.7]]} delay={7.8} opacity={0.45} />
+
+            {/* ══ GARAGE DOORS ══ */}
+            <WireBox position={[9.2, 0.85, 2.41]} size={[1.2, 1.5, 0.02]} delay={7.0} />
+            <WireBox position={[10.6, 0.85, 2.41]} size={[1.2, 1.5, 0.02]} delay={7.1} />
+            {/* Horizontal slats */}
+            {[0.3, 0.65, 1.0, 1.35].map((y, i) => (
+                <group key={`gs-${i}`}>
+                    <WireLine points={[[8.6, y, 2.42], [9.8, y, 2.42]]} delay={7.3 + i * 0.1} opacity={0.3} />
+                    <WireLine points={[[10, y, 2.42], [11.2, y, 2.42]]} delay={7.35 + i * 0.1} opacity={0.3} />
+                </group>
+            ))}
+
+            {/* ══ ROOF DETAILS ══ */}
+            {/* Water tank */}
+            <WireBox position={[-2.2, 8.9, -1]} size={[0.8, 0.8, 0.8]} delay={8.5} />
+            {/* Antenna */}
+            <WireLine points={[[-2.2, 9.3, -1], [-2.2, 10.5, -1]]} delay={8.8} opacity={0.5} />
+            <WireLine points={[[-2.45, 9.9, -1], [-1.95, 9.9, -1]]} delay={9.0} opacity={0.4} />
+            {/* AC units */}
+            <WireBox position={[0.6, 8.55, -0.5]} size={[0.5, 0.35, 0.5]} delay={9.2} color={GOLD_FAINT} />
+            <WireBox position={[1.3, 8.55, -0.5]} size={[0.5, 0.35, 0.5]} delay={9.3} color={GOLD_FAINT} />
+
+            {/* ══ TREES ══ */}
+            {/* Tree 1 — far left */}
+            <WireLine points={[[-9, 0.05, 4], [-9, 1.8, 4]]} delay={9.5} opacity={0.5} />
+            <WireBox position={[-9, 2.3, 4]} size={[1, 1, 1]} delay={9.6} color={GOLD_FAINT} />
+            {/* Tree 2 — right */}
+            <WireLine points={[[11.5, 0.05, 3.5], [11.5, 1.3, 3.5]]} delay={9.8} opacity={0.45} />
+            <WireBox position={[11.5, 1.8, 3.5]} size={[0.9, 0.9, 0.9]} delay={9.9} color={GOLD_FAINT} />
+            {/* Tree 3 — back */}
+            <WireLine points={[[-4, 0.05, -4.5], [-4, 1.6, -4.5]]} delay={10.0} opacity={0.45} />
+            <WireBox position={[-4, 2.1, -4.5]} size={[1.1, 1.1, 1.1]} delay={10.1} color={GOLD_FAINT} />
+
+            {/* ══ COMPOUND WALLS ══ */}
+            <WireBox position={[-8.5, 0.3, 4.8]} size={[1.8, 0.5, 0.15]} delay={10.3} color={GOLD_FAINT} />
+            <WireBox position={[10.5, 0.3, 4.8]} size={[2, 0.5, 0.15]} delay={10.4} color={GOLD_FAINT} />
+
+            {/* ══ BACK WINDOWS ══ */}
+            <WireBox position={[-1.5, 4.5, -3.01]} size={[2.2, 1.3, 0.02]} delay={8.0} />
+            <WireBox position={[1.5, 4.5, -3.01]} size={[1.8, 1.3, 0.02]} delay={8.1} />
+            <WireBox position={[0, 1, -3.01]} size={[2.8, 1.3, 0.02]} delay={8.3} />
+
+            {/* Left wing side window */}
+            <WireBox position={[-8.31, 3.2, 0.3]} size={[0.02, 1, 1.6]} delay={7.8} />
+            {/* Right wing side window */}
+            <WireBox position={[7.81, 3.5, 0]} size={[0.02, 1.1, 1.8]} delay={8.0} />
+        </group>
+    );
+};
+
+// ─── Main Component ───
 const HeroAnimated = () => {
     return (
         <section className="hero-animated">
-            {/* Animated Modern House - Desktop */}
-            <div className="house-container">
-                <ModernHouse />
-                {/* Floating construction icons */}
+            {/* 3D Canvas — contained to left side */}
+            <div className="house-container-3d">
+                <Canvas
+                    camera={{ position: [30, 20, 30], fov: 32, near: 0.1, far: 100 }}
+                    gl={{ antialias: true, alpha: true }}
+                    style={{ background: 'transparent' }}
+                    dpr={[1, 1.5]}
+                >
+                    <CameraRig />
+                    <House />
+                </Canvas>
+            </div>
+
+            {/* Floating construction icons */}
+            <div className="floating-icons-3d">
                 <div className="floating-icon icon-1">
                     <Home size={24} />
                 </div>
@@ -214,18 +319,8 @@ const HeroAnimated = () => {
                 </div>
             </div>
 
-            {/* Construction Background - Mobile/Fallback */}
-            <div className="construction-bg"></div>
-
             {/* Animated Grid Overlay */}
             <div className="grid-overlay"></div>
-
-            {/* Floating Elements */}
-            <div className="floating-elements">
-                {Array.from({ length: 8 }).map((_, i) => (
-                    <div key={i} className="floating-element"></div>
-                ))}
-            </div>
 
             {/* Top Header */}
             <div className="hero-header">
@@ -235,9 +330,7 @@ const HeroAnimated = () => {
                         <div className="coord-dot"></div>
                         <span>TAMIL NADU</span>
                     </div>
-
                     <div className="brand-section">
-                    
                         <div className="brand-divider"></div>
                         <span className="brand-tagline">SINCE 2015</span>
                     </div>
@@ -254,14 +347,12 @@ const HeroAnimated = () => {
             <div className="hero-main">
                 <div className="content-wrapper">
                     <div className="content-box">
-                        {/* Top Decoration */}
                         <div className="top-decoration">
                             <div className="deco-line"></div>
-                            <span className="deco-symbol">¬¡</span>
+                            <span className="deco-symbol">◊</span>
                             <div className="deco-line-full"></div>
                         </div>
 
-                        {/* Title */}
                         <div className="title-wrapper">
                             <div className="title-accent"></div>
                             <h1 className="hero-title">
@@ -269,14 +360,12 @@ const HeroAnimated = () => {
                             </h1>
                         </div>
 
-                        {/* Decorative Dots */}
                         <div className="dots-decoration">
                             {Array.from({ length: 40 }).map((_, i) => (
                                 <div key={i} className="dot"></div>
                             ))}
                         </div>
 
-                        {/* Description */}
                         <div className="description-wrapper">
                             <p className="description">
                                 We provide complete end-to-end construction solutions. From blueprint to final handover, we build efficient, beautiful, and durable homes in Chennai's western region.
@@ -286,29 +375,24 @@ const HeroAnimated = () => {
                             </div>
                         </div>
 
-                        {/* CTA Buttons */}
                         <div className="cta-buttons flex gap-4">
                             <a href="#calculator" className="btn btn-primary h-14 px-8 text-lg rounded-full flex items-center gap-2">
                                 GET FREE QUOTE <ArrowRight size={18} />
                             </a>
-
                             <a href="/services" className="btn btn-outline h-14 px-8 text-lg rounded-full flex items-center gap-2 bg-stone-50 hover:bg-stone-200 border-stone-300 text-stone-600 hover:text-stone-900">
                                 EXPLORE SERVICES
                             </a>
                         </div>
 
-
-                        {/* Bottom Decoration */}
                         <div className="bottom-decoration">
-                            <span className="symbol">¬¡</span>
+                            <span className="symbol">◊</span>
                             <div className="line"></div>
                             <span className="text">SSJ.DEVELOPERS</span>
                         </div>
                     </div>
                 </div>
             </div>
-
-        </section >
+        </section>
     );
 };
 
