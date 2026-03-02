@@ -6,7 +6,9 @@
     z-index: 1000;
     padding: 1.5rem 0;
     transition: all 0.3s ease;
-    background-color: transparent;
+    background-color: rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
 }
 
 .header.scrolled {
