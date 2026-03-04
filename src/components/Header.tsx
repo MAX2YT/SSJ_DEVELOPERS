@@ -47,9 +47,9 @@ const Header = () => {
                 {/* Mobile Nav */}
                 {isMenuOpen && (
                     <nav className="mobile-menu">
-                        <Link to="/" className="nav-link" onClick={() => setIsMenuOpen(false)}>Home</Link>
-                        <Link to="/services" className="nav-link" onClick={() => setIsMenuOpen(false)}>Services</Link>
-                        <Link to="/projects" className="nav-link" onClick={() => setIsMenuOpen(false)}>Projects</Link>
+                        <Link to="/" className={`nav-link ${isActive('/')}`} onClick={() => setIsMenuOpen(false)}>Home</Link>
+                        <Link to="/services" className={`nav-link ${isActive('/services')}`} onClick={() => setIsMenuOpen(false)}>Services</Link>
+                        <Link to="/projects" className={`nav-link ${isActive('/projects')}`} onClick={() => setIsMenuOpen(false)}>Projects</Link>
                         <Link to="/contact" className="btn btn-primary" onClick={() => setIsMenuOpen(false)}>Contact Us</Link>
                     </nav>
                 )}

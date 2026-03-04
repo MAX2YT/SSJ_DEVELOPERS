@@ -331,7 +331,7 @@
 /* Animated Grid Pattern Overlay */
 .hero-animated .grid-overlay {
   position: absolute;
-  inset: 0;
+  inset: -60px;
   background-image:
     linear-gradient(rgba(197, 160, 89, 0.1) 1px, transparent 1px),
     linear-gradient(90deg, rgba(197, 160, 89, 0.1) 1px, transparent 1px);
@@ -565,6 +565,7 @@
 .hero-animated .content-wrapper {
   width: 100%;
   padding: 1.5rem;
+  overflow: hidden;
 }
 
 @media (min-width: 1024px) {

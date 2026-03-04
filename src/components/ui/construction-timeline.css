@@ -1,6 +1,7 @@
 .timeline-section {
     padding: 6rem 0;
     background: linear-gradient(180deg, #FAF8F4 0%, #FFFFFF 50%, #FAF8F4 100%);
+    overflow-x: hidden;
 }
 
 .timeline-header {
