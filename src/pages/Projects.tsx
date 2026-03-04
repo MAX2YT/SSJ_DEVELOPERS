@@ -4,49 +4,59 @@ import ProjectCard from '../components/ui/project-card';
 const projects = [
     {
         id: 1,
-        customer: "Modern Duplex Complex",
-        location: "Avadi, Chennai",
+        projectName: "Lakshmi Illam",
+        clientName: "Mr. Rajendran",
+        location: "Anna Nagar, Chennai",
         image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-        type: "Duplex",
-        area: "3500 SQ.FT",
-        floors: 2,
-        plotNo: "12"
+        type: "Residential",
     },
     {
         id: 2,
-        customer: "Mr. & Mrs. Sharma",
-        location: "Avadi, Chennai",
+        projectName: "Anbu Residency",
+        clientName: "Mrs. Lakshmi Narayanan",
+        location: "Velachery, Chennai",
         image: "https://images.unsplash.com/photo-1613490493576-7fde63acd811?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+        type: "Residential",
     },
     {
         id: 3,
-        customer: "Green Valley Association",
-        location: "Poonamallee, Chennai",
+        projectName: "Sri Sai Towers",
+        clientName: "Mr. Karthikeyan",
+        location: "Tambaram, Chennai",
         image: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+        type: "Commercial",
     },
     {
         id: 4,
-        customer: "Mrs. Anitha",
-        location: "Thirumazhisai",
-        image: "https://mir-s3-cdn-cf.behance.net/project_modules/fs/e78caf13864951.5627958ac9beb.jpg",
+        projectName: "Vasantham Villa",
+        clientName: "Mr. Prabhakaran",
+        location: "Porur, Chennai",
+        image: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+        type: "Residential",
     },
     {
         id: 5,
-        customer: "TechFlow Solutions",
-        location: "Ambattur Industrial Estate",
-        image: "https://images.unsplash.com/photo-1497366216548-37526070297c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+        projectName: "Meenakshi Enclave",
+        clientName: "Mrs. Meenakshi",
+        location: "T Nagar, Chennai",
+        image: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+        type: "Residential",
     },
     {
         id: 6,
-        customer: "Mr. Rajesh",
-        location: "Anna Nagar, Chennai",
-        image: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgZOFL-Isjypqxv0WBTN-uZMzfj4cOGQmXTNlIQNMsxSQYokyiRMW84jiaFSmQ7kVM9NiR4Ai-AtzTIdF55Ik9hH5e7MlvK1pEVCL3RJ0z-H2JNCv-1H1pjWDUzOGdJLDThhR6odI2EutU/s1600/modern-flat-roof-home.jpg",
+        projectName: "Murugan Heights",
+        clientName: "Mr. Senthilkumar",
+        location: "Chromepet, Chennai",
+        image: "https://images.unsplash.com/photo-1497366216548-37526070297c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+        type: "Commercial",
     },
     {
         id: 7,
-        customer: "Dr. Priya",
-        location: "OMR, Chennai",
-        image: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+        projectName: "Kaveri Gardens",
+        clientName: "Dr. Anitha",
+        location: "Sholinganallur, Chennai",
+        image: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgZOFL-Isjypqxv0WBTN-uZMzfj4cOGQmXTNlIQNMsxSQYokyiRMW84jiaFSmQ7kVM9NiR4Ai-AtzTIdF55Ik9hH5e7MlvK1pEVCL3RJ0z-H2JNCv-1H1pjWDUzOGdJLDThhR6odI2EutU/s1600/modern-flat-roof-home.jpg",
+        type: "Residential",
     }
 ];
 
@@ -59,7 +69,7 @@ const Projects = () => {
             />
             {/* Using min-h-screen to ensure full page coverage if content is short, but flex-col for centering */}
             <section className="py-20 bg-stone-50 min-h-[60vh] flex flex-col items-center relative overflow-hidden">
-                
+
                 <div className="container mx-auto px-4 flex flex-col items-center relative z-10">
                     <div className="text-center max-w-2xl mx-auto mb-16">
                         <span className="text-[#C5A059] font-semibold tracking-[0.2em] uppercase text-xs mb-3 block">Our Portfolio</span>
@@ -82,12 +92,10 @@ const Projects = () => {
                             <ProjectCard
                                 key={project.id}
                                 image={project.image}
-                                customer={project.customer}
+                                projectName={project.projectName}
+                                clientName={project.clientName}
                                 location={project.location}
                                 type={project.type}
-                                area={project.area}
-                                floors={project.floors}
-                                plotNo={project.plotNo}
                             />
                         ))}
                     </div>

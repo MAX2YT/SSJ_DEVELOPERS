@@ -1,8 +1,7 @@
 
 import ServicesList from '../components/Services';
-import { PricingSection } from '../components/ui/pricing';
 import HeroSection from '../components/ui/about-section';
-import WhyChooseUs from '../components/WhyChooseUs';
+import ConstructionTimeline from '../components/ui/construction-timeline';
 
 const Services = () => {
     return (
@@ -12,8 +11,7 @@ const Services = () => {
                 subtitle="Quality construction & design solutions"
             />
             <ServicesList />
-            <PricingSection />
-            <WhyChooseUs />
+            <ConstructionTimeline />
         </div>
     );
 };

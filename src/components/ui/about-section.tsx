@@ -21,10 +21,11 @@ export default function HeroSection({
 
     return (
         <section
-            className="relative min-h-[85vh] flex items-center overflow-hidden"
+            className="relative flex items-center overflow-hidden"
             style={{
                 background: 'linear-gradient(135deg, #FAF8F4 0%, #F5F3EE 50%, #FFF9F0 100%)',
-                paddingTop: '100px'
+                paddingTop: '100px',
+                paddingBottom: '60px'
             }}
         >
             {/* Subtle Pattern Background */}
@@ -196,15 +197,15 @@ export default function HeroSection({
 
                         </div>
 
-                        {/* Decorative Elements */}
+                        {/* Decorative Elements - using inset positioning to avoid overflow */}
                         <div
-                            className="absolute -top-6 -right-6 w-32 h-32 rounded-full -z-10"
+                            className="absolute top-0 right-0 w-32 h-32 rounded-full -z-10"
                             style={{
                                 background: 'linear-gradient(135deg, rgba(197,160,89,0.2) 0%, transparent 70%)'
                             }}
                         />
                         <div
-                            className="absolute -bottom-6 -left-6 w-40 h-40 rounded-full -z-10"
+                            className="absolute bottom-0 left-0 w-40 h-40 rounded-full -z-10"
                             style={{
                                 background: 'linear-gradient(135deg, rgba(197,160,89,0.15) 0%, transparent 70%)'
                             }}

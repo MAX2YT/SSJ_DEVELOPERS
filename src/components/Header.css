@@ -4,18 +4,18 @@
     left: 0;
     width: 100%;
     z-index: 1000;
-    padding: 1.5rem 0;
+    padding: 0.5rem 0;
     transition: all 0.3s ease;
-    background-color: rgba(0, 0, 0, 0.25);
+    background-color: rgba(0, 0, 0, 0.35);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
 }
 
 .header.scrolled {
-    background-color: rgba(255, 255, 255, 0.95);
+    background-color: rgba(255, 255, 255, 0.97);
     backdrop-filter: blur(10px);
-    padding: 1rem 0;
-    box-shadow: var(--shadow-sm);
+    padding: 0.35rem 0;
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.08);
 }
 
 .header-container {
@@ -25,6 +25,12 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+.nav-desktop {
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.5rem !important;
 }
 
 .logo {
@@ -55,28 +61,62 @@
     letter-spacing: -0.02em;
 }
 
-.nav-desktop {
-    display: flex;
-    align-items: center;
-    gap: 2rem;
-}
-
-.nav-link {
-    color: var(--primary-light);
+/* Default state: dark background → white text */
+.nav-desktop .nav-link {
+    color: rgba(255, 255, 255, 0.9);
     font-weight: 500;
-    font-size: 0.95rem;
+    font-size: 0.9rem;
+    letter-spacing: 0.01em;
+    transition: color 0.3s ease;
+    padding: 0.4rem 0.85rem;
+    display: inline-block;
 }
 
-.nav-link:hover {
+.nav-desktop .nav-link:hover {
+    color: #ffffff;
+}
+
+.nav-desktop .nav-link.active {
+    color: #ffffff;
+    position: relative;
+}
+
+.nav-desktop .nav-link.active::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--accent);
+    border-radius: 1px;
+}
+
+/* Scrolled state: white background → dark text */
+.header.scrolled .nav-link {
+    color: var(--primary-light);
+}
+
+.header.scrolled .nav-link:hover {
     color: var(--accent);
 }
 
+.header.scrolled .nav-link.active {
+    color: var(--primary);
+}
+
+/* Mobile toggle - white on dark bg */
 .nav-mobile-toggle {
     display: none;
     background: none;
     border: none;
-    color: var(--primary);
+    color: #ffffff;
     cursor: pointer;
+    padding: 0.25rem;
+}
+
+.header.scrolled .nav-mobile-toggle {
+    color: var(--primary);
 }
 
 .mobile-menu {
@@ -87,10 +127,20 @@
     background: white;
     padding: 1rem 2rem;
     display: flex;
-    flex-col: column;
-    gap: 1rem;
-    box-shadow: var(--shadow-md);
     flex-direction: column;
+    gap: 0.75rem;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+.mobile-menu .nav-link {
+    color: var(--primary-light);
+    font-weight: 500;
+    font-size: 0.95rem;
+    padding: 0.5rem 0;
+}
+
+.mobile-menu .nav-link:hover {
+    color: var(--accent);
 }
 
 @media (max-width: 768px) {

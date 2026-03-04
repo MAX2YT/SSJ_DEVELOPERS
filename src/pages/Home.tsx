@@ -1,6 +1,7 @@
 
 import AboutUs from '../components/AboutUs';
-import ConstructionTimeline from '../components/ui/construction-timeline';
+import WhyChooseUs from '../components/WhyChooseUs';
+import { PricingSection } from '../components/ui/pricing';
 import CostCalculator from '../components/CostCalculator';
 import StaggerTestimonials from '../components/StaggerTestimonials';
 
@@ -28,7 +29,8 @@ const Home = () => {
                 />
             </section>
             <AboutUs />
-            <ConstructionTimeline />
+            <WhyChooseUs />
+            <PricingSection />
             <CostCalculator />
             <StaggerTestimonials />
         </>
