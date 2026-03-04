@@ -1,4 +1,4 @@
-import { useRef, useMemo, useCallback } from 'react';
+import { useRef, useMemo } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
 import { ArrowRight, Home, Ruler, Hammer } from 'lucide-react';
@@ -78,6 +78,7 @@ const WireLine = ({ points, delay, color = GOLD, opacity = 0.6 }: LineProps) => 
     });
 
     return (
+        // @ts-ignore - type collision with SVG <line> element
         <line geometry={geo}>
             <lineBasicMaterial ref={matRef} color={color} transparent opacity={0} depthWrite={false} />
         </line>
