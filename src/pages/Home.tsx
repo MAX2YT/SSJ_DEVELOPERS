@@ -13,7 +13,7 @@ const Home = () => {
                 {/* Desktop video */}
                 <video
                     className="absolute inset-0 w-full h-full object-cover hidden md:block"
-                    src="/Video Project 6_Precise_Starlight_Fast_2.mp4"
+                    src="/Video Project 6_Precise_Starlight_Fast_2.webm"
                     autoPlay
                     loop
                     muted
@@ -22,7 +22,7 @@ const Home = () => {
                 {/* Mobile portrait video */}
                 <video
                     className="absolute inset-0 w-full h-full object-cover block md:hidden"
-                    src="/Flow_delpmaspu_.mp4"
+                    src="/Flow_delpmaspu_.webm"
                     autoPlay
                     loop
                     muted
