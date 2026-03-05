@@ -4,6 +4,7 @@ import WhyChooseUs from '../components/WhyChooseUs';
 import { PricingSection } from '../components/ui/pricing';
 import CostCalculator from '../components/CostCalculator';
 import StaggerTestimonials from '../components/StaggerTestimonials';
+import DecorativeLines from '../components/DecorativeLines';
 
 const Home = () => {
     return (
@@ -28,11 +29,13 @@ const Home = () => {
                     playsInline
                 />
             </section>
-            <AboutUs />
-            <WhyChooseUs />
-            <PricingSection />
-            <CostCalculator />
-            <StaggerTestimonials />
+            <DecorativeLines>
+                <AboutUs />
+                <WhyChooseUs />
+                <PricingSection />
+                <CostCalculator />
+                <StaggerTestimonials />
+            </DecorativeLines>
         </>
     );
 };

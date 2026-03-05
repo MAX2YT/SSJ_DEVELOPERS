@@ -1,10 +1,13 @@
 
 import ContactForm from '../components/Contact';
+import DecorativeLines from '../components/DecorativeLines';
 
 const Contact = () => {
     return (
         <div className="pt-20">
-            <ContactForm />
+            <DecorativeLines>
+                <ContactForm />
+            </DecorativeLines>
         </div>
     );
 };

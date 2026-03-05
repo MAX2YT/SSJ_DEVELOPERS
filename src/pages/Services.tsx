@@ -2,6 +2,7 @@
 import ServicesList from '../components/Services';
 import HeroSection from '../components/ui/about-section';
 import ConstructionTimeline from '../components/ui/construction-timeline';
+import DecorativeLines from '../components/DecorativeLines';
 
 const Services = () => {
     return (
@@ -10,8 +11,10 @@ const Services = () => {
                 title="Our Premium Services"
                 subtitle="Quality construction & design solutions"
             />
-            <ServicesList />
-            <ConstructionTimeline />
+            <DecorativeLines>
+                <ServicesList />
+                <ConstructionTimeline />
+            </DecorativeLines>
         </div>
     );
 };

@@ -6,10 +6,10 @@ const Contact = () => {
     return (
         <section id="contact" className="contact-section">
             <div className="container">
-                <div className="text-center max-w-2xl mx-auto mb-16">
+                <div className="flex flex-col items-center text-center mb-16 w-full">
                     <span className="text-accent font-semibold tracking-wide uppercase text-sm mb-3 block">Get in Touch</span>
-                    <h2 className="mb-4">Contact Us</h2>
-                    <p className="text-slate-500">
+                    <h2 className="mb-4 text-center">Contact Us</h2>
+                    <p className="text-slate-500 max-w-2xl text-center">
                         Ready to start your dream project? Reach out to us for a consultation or quote.
                     </p>
                 </div>

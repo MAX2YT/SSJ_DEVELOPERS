@@ -193,7 +193,9 @@ const Services = () => {
                                     color: '#78716C',
                                     lineHeight: 1.6,
                                     fontSize: '1rem',
-                                    marginBottom: '1.5rem'
+                                    marginBottom: '1.5rem',
+                                    textAlign: 'justify',
+                                    textJustify: 'inter-word'
                                 }}>
                                     {service.desc}
                                 </p>

@@ -6,9 +6,10 @@
     z-index: 1000;
     padding: 0.5rem 0;
     transition: all 0.3s ease;
-    background-color: rgba(0, 0, 0, 0.35);
+    background-color: rgba(255, 255, 255, 0.7);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .header.scrolled {
@@ -28,9 +29,9 @@
 }
 
 .nav-desktop {
-    display: flex !important;
-    align-items: center !important;
-    gap: 0.5rem !important;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
 }
 
 .logo {
@@ -61,9 +62,9 @@
     letter-spacing: -0.02em;
 }
 
-/* Default state: dark background → white text */
+/* Default state: bright background → dark text */
 .nav-desktop .nav-link {
-    color: rgba(255, 255, 255, 0.9);
+    color: var(--primary-light);
     font-weight: 500;
     font-size: 0.9rem;
     letter-spacing: 0.01em;
@@ -73,11 +74,11 @@
 }
 
 .nav-desktop .nav-link:hover {
-    color: #ffffff;
+    color: var(--accent);
 }
 
 .nav-desktop .nav-link.active {
-    color: #ffffff;
+    color: var(--primary);
     position: relative;
 }
 
@@ -92,7 +93,7 @@
     border-radius: 1px;
 }
 
-/* Scrolled state: white background → dark text */
+/* Scrolled state: dark text */
 .header.scrolled .nav-link {
     color: var(--primary-light);
 }
@@ -105,12 +106,12 @@
     color: var(--primary);
 }
 
-/* Mobile toggle - white on dark bg */
+/* Mobile toggle - dark text on white bg */
 .nav-mobile-toggle {
     display: none;
     background: none;
     border: none;
-    color: #ffffff;
+    color: var(--primary);
     cursor: pointer;
     padding: 0.25rem;
 }
@@ -119,17 +120,33 @@
     color: var(--primary);
 }
 
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 .mobile-menu {
     position: absolute;
     top: 100%;
     left: 0;
     width: 100%;
-    background: white;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(12px);
     padding: 1rem 2rem;
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+    animation: slideDown 0.3s ease-out forwards;
+    transform-origin: top;
 }
 
 .mobile-menu .nav-link {
@@ -150,5 +167,12 @@
 
     .nav-mobile-toggle {
         display: block;
+    }
+
+    .mobile-menu .btn {
+        text-align: center;
+        justify-content: center;
+        width: 100%;
+        margin-top: 0.5rem;
     }
 }

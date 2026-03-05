@@ -100,7 +100,7 @@ export default function HeroSection({
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.5, duration: 0.6 }}
                             className="text-lg mb-8 max-w-xl leading-relaxed"
-                            style={{ color: '#57534E' }}
+                            style={{ color: '#57534E', textAlign: 'justify', textJustify: 'inter-word' }}
                         >
                             {subtitle}. From blueprint to handover, we bring your vision to life with precision, craftsmanship, and an unwavering commitment to excellence.
                         </motion.p>
