@@ -14,7 +14,7 @@ const Contact = () => {
                     </p>
                 </div>
 
-                <div className="grid md:grid-cols-2 gap-16 items-start">
+                <div className="grid md:grid-cols-2 gap-8 md:gap-16 items-start">
                     {/* Contact Info */}
                     <div className="space-y-6">
                         <div className="contact-info-item">

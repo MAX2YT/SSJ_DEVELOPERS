@@ -322,12 +322,7 @@ export default function WhyChooseUs() {
         </motion.div>
 
         {/*  Feature Grid  */}
-        <div style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(3, 1fr)",
-          gap: "20px",
-          marginBottom: "72px",
-        }}>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mb-18">
           {FEATURES.map((f, i) => (
             <FeatureCard key={i} {...f} index={i} />
           ))}
@@ -339,18 +334,7 @@ export default function WhyChooseUs() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.4 }}
           transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
-          style={{
-            background: C.bgWhite,
-            border: `1px solid ${C.border}`,
-            borderRadius: "20px",
-            padding: "52px 40px",
-            marginBottom: "72px",
-            display: "grid",
-            gridTemplateColumns: "repeat(4, 1fr)",
-            gap: "32px",
-            position: "relative",
-            overflow: "hidden",
-          }}
+          className="bg-white border border-[#1C1917]/10 rounded-[20px] p-8 md:p-[52px_40px] mb-[72px] grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-[32px] relative overflow-hidden"
         >
           <div style={{
             position: "absolute",
@@ -366,7 +350,7 @@ export default function WhyChooseUs() {
               left: `${i * 25}%`,
               width: "1px",
               background: C.border,
-            }} />
+            }} className="hidden md:block" />
           ))}
 
           {STATS.map((s, i) => <StatItem key={i} {...s} index={i} />)}
@@ -378,17 +362,7 @@ export default function WhyChooseUs() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
-          style={{
-            background: C.dark,
-            borderRadius: "20px",
-            padding: "64px 56px",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            gap: "48px",
-            position: "relative",
-            overflow: "hidden",
-          }}
+          className="bg-[#1C1917] rounded-[20px] p-8 md:p-[64px_56px] flex flex-col md:flex-row items-start md:items-center justify-between gap-8 md:gap-[48px] relative overflow-hidden"
         >
           <div style={{
             position: "absolute",
@@ -443,7 +417,8 @@ export default function WhyChooseUs() {
             gap: "12px",
             flexShrink: 0,
             position: "relative",
-          }}>
+            width: "100%",
+          }} className="md:w-auto mt-4 md:mt-0">
             <CTAButton primary onClick={() => navigate("/contact")}>
               Start Your Project <ArrowUpRight size={15} />
             </CTAButton>

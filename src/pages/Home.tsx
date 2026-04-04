@@ -13,21 +13,25 @@ const Home = () => {
                 {/* Desktop video */}
                 <video
                     className="absolute inset-0 w-full h-full object-cover hidden md:block"
-                    src="/Video Project 6_Precise_Starlight_Fast_2.webm"
                     autoPlay
                     loop
                     muted
                     playsInline
-                />
+                >
+                    <source src="/Video Project 6_Precise_Starlight_Fast_2.webm" type="video/webm" />
+                    <source src="/Video Project 6_Precise_Starlight_Fast_2.mp4" type="video/mp4" />
+                </video>
                 {/* Mobile portrait video */}
                 <video
                     className="absolute inset-0 w-full h-full object-cover block md:hidden"
-                    src="/Flow_delpmaspu_.webm"
                     autoPlay
                     loop
                     muted
                     playsInline
-                />
+                >
+                    <source src="/Flow_delpmaspu_.webm" type="video/webm" />
+                    <source src="/Flow_delpmaspu_.mp4" type="video/mp4" />
+                </video>
             </section>
             <DecorativeLines>
                 <AboutUs />

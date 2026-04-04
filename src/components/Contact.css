@@ -43,9 +43,15 @@
 
 .contact-form {
     background: white;
-    padding: 2.5rem;
+    padding: 1.5rem;
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-lg);
+}
+
+@media (min-width: 768px) {
+    .contact-form {
+        padding: 2.5rem;
+    }
 }
 
 .form-textarea {
